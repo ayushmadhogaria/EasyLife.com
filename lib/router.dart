@@ -1,3 +1,4 @@
+import 'package:easylifeapp/admin/screens/add_serviceman_screen.dart';
 import 'package:easylifeapp/screens/home_screen.dart';
 import 'package:easylifeapp/screens/login_screen.dart';
 import 'package:easylifeapp/screens/registration_screen.dart';
@@ -25,6 +26,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const BottomBar(),
+      );
+    case AddServiceManScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const AddServiceManScreen(),
       );
     default:
       return MaterialPageRoute(

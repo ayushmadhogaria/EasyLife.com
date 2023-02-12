@@ -60,7 +60,7 @@ class _ServicemanScreenState extends State<ServicemanScreen> {
                 ),
               ),
               const Text(
-                'ServiceMan Panel',
+                'Admin Panel',
                 style: TextStyle(
                     color: Color.fromARGB(255, 61, 117, 93),
                     fontWeight: FontWeight.bold),

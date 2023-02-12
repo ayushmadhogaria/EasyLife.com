@@ -1,3 +1,4 @@
+import 'package:easylifeapp/admin/screens/all_service_screen.dart';
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,9 +16,7 @@ class _AdminScreenState extends State<AdminScreen> {
   double bottomBarborderWidth = 5;
 
   List<Widget> pages = [
-    const Center(
-      child: Text("Posts page"),
-    ),
+    const AllServiceManScreen(),
     const Center(
       child: Text("Analytics page"),
     ),
@@ -107,7 +106,7 @@ class _AdminScreenState extends State<AdminScreen> {
                   ),
                 ),
               ),
-              child: const Icon(Icons.book_sharp),
+              child: const Icon(Icons.analytics_outlined),
             ),
             label: 'Analytics',
           ),

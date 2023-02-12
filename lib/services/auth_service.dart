@@ -10,6 +10,8 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../screens/login_screen.dart';
+
 //register user
 
 class AuthService {
@@ -47,6 +49,10 @@ class AuthService {
           showSnackBar(
             context,
             'Account created! Proceed to login with the same credentials.',
+          );
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LoginScreen()),
           );
         },
       );

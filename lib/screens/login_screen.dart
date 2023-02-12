@@ -4,7 +4,6 @@ import 'package:easylifeapp/services/auth_service.dart';
 import 'package:easylifeapp/widgets/bottom_bar.dart';
 import 'package:easylifeapp/widgets/custom_button.dart';
 import 'package:easylifeapp/widgets/custom_textfield.dart';
-import 'package:easylifeapp/widgets/password_custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -120,7 +119,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       validator: (val) {
                         if (val == null || val.isEmpty) {
                           return 'Enter your Password';
-                          debugPrint('hello');
                         }
                         return null;
                       },

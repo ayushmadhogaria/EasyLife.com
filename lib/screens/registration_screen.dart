@@ -230,7 +230,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     onTap: () {
                       if (_registerFormKey.currentState!.validate()) {
                         registerUser();
-                        Navigator.pushNamed(context, LoginScreen.routeName);
                       }
                       if (isChecked) {
                       } else {

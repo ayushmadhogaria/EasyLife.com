@@ -39,7 +39,7 @@ class GlobalVariables {
       'image': 'assets/babysitter.png',
     },
     {
-      'title': 'OldAge \n  Care',
+      'title': 'OldAgeCare',
       'image': 'assets/oldage.png',
     },
   ];
