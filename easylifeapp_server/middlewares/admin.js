@@ -14,7 +14,7 @@ const admin = async (req, res, next) => {
         .status(401)
         .json({ msg: "Could not authorize. Token verification failed." });
     const user = await User.findById(isVerified.id);
-    if (user.type == "Customer") {
+    if (user.type == "Customer" || user.type == "Serviceman") {
       return res.status(401).json({ msg: "You are not an admin!" });
     }
     req.user = isVerified.id;
@@ -24,3 +24,5 @@ const admin = async (req, res, next) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+module.exports = admin;
