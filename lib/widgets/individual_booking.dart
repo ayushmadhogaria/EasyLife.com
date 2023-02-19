@@ -16,7 +16,7 @@ class IndividualBooking extends StatelessWidget {
             width: 1.5,
           ),
           borderRadius: BorderRadius.circular(5),
-          color: GlobalVariables.unselectednavbarcolor,
+          color: Color.fromARGB(255, 182, 219, 204),
         ),
         child: Container(
           width: 180,

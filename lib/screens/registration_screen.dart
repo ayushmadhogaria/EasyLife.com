@@ -2,7 +2,6 @@ import 'package:easylifeapp/screens/login_screen.dart';
 import 'package:easylifeapp/services/auth_service.dart';
 import 'package:easylifeapp/widgets/custom_textfield.dart';
 import 'package:easylifeapp/widgets/number_textfield.dart';
-import 'package:easylifeapp/widgets/role_customfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../constants/global_variables.dart';
@@ -30,8 +29,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _phonenumberController = TextEditingController();
-  final TextEditingController _typeController = TextEditingController();
-
+  String type = 'Customer';
   @override
   void dispose() {
     super.dispose();
@@ -39,8 +37,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     _passwordController.dispose();
     _nameController.dispose();
     _phonenumberController.dispose();
-    _typeController.dispose();
   }
+
+  List<String> userType = [
+    'Customer',
+    'Serviceman',
+  ];
 
   void registerUser() {
     authService.registerUser(
@@ -49,7 +51,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       password: _passwordController.text,
       name: _nameController.text,
       phone: _phonenumberController.text,
-      type: _typeController.text,
+      type: type,
     );
   }
 
@@ -172,12 +174,40 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     color: Colors.white,
                   ),
                 ),
-                RoleCustomTextField(
-                  controller: _typeController,
-                  hintText: 'Role',
-                  icon: const Icon(
-                    Icons.settings_accessibility_rounded,
-                    color: Colors.white,
+                Container(
+                  padding: const EdgeInsets.only(top: 20, left: 15),
+                  height: 50,
+                  width: 360,
+                  child: const Text(
+                    'User type?',
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 79, 110, 100),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16),
+                  ),
+                ),
+                SizedBox(
+                  width: 330,
+                  child: DropdownButton(
+                    value: type,
+                    icon: const Icon(Icons.keyboard_arrow_down),
+                    items: userType.map((String item) {
+                      return DropdownMenuItem(
+                        value: item,
+                        child: Text(
+                          item,
+                          style: const TextStyle(
+                              color: Color.fromARGB(255, 54, 83, 73),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (String? newVal) {
+                      setState(() {
+                        type = newVal!;
+                      });
+                    },
                   ),
                 ),
                 Container(

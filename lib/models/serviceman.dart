@@ -5,23 +5,24 @@ class Serviceman {
   final String description;
   final double salary;
   final String phone;
+  final String address;
   final String shift;
-  final String worktime;
+  final String time;
   final String category;
   final List<String> images;
   final String? id;
-  final String? userId;
+
   Serviceman({
     required this.name,
     required this.description,
     required this.salary,
     required this.phone,
+    required this.address,
     required this.shift,
-    required this.worktime,
+    required this.time,
     required this.category,
     required this.images,
     this.id,
-    this.userId,
   });
 
   Map<String, dynamic> toMap() {
@@ -30,12 +31,12 @@ class Serviceman {
       'description': description,
       'salary': salary,
       'phone': phone,
+      'address': address,
       'shift': shift,
-      'worktime': worktime,
+      'time': time,
       'category': category,
       'images': images,
       'id': id,
-      'userId': userId
     };
   }
 
@@ -45,12 +46,12 @@ class Serviceman {
       description: map['description'] ?? '',
       salary: map['salary']?.toDouble() ?? 0.0,
       phone: map['phone'] ?? '',
+      address: map['address'] ?? '',
       shift: map['shift'] ?? '',
-      worktime: map['worktime'] ?? '',
+      time: map['time'] ?? '',
       images: List<String>.from(map['images']),
       category: map['category'] ?? '',
       id: map['_id'],
-      userId: map['userId'],
     );
   }
 

@@ -1,11 +1,13 @@
 import 'dart:io';
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:easylifeapp/admin/services/admin_services.dart';
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/constants/utils.dart';
 import 'package:easylifeapp/widgets/add_serviceman_textfield.dart';
+import 'package:easylifeapp/widgets/loader.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddServiceManScreen extends StatefulWidget {
@@ -19,23 +21,26 @@ class AddServiceManScreen extends StatefulWidget {
 class _AddServiceManScreenState extends State<AddServiceManScreen> {
   final TextEditingController serviceManNameController =
       TextEditingController();
+  final TextEditingController addressController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController salaryController = TextEditingController();
-  final TextEditingController shiftController = TextEditingController();
-  final TextEditingController timeController = TextEditingController();
   final TextEditingController numberController = TextEditingController();
-
+  final AdminServices adminServices = AdminServices();
   String category = 'Maid';
+  String shift = 'Morning-\n7am to 12pm';
+  String time = 'Part-Time';
   List<File> images = [];
+
+  bool isLoading = false;
+  final _addServiceManFormKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     super.dispose();
     serviceManNameController.dispose();
+    addressController.dispose();
     descriptionController.dispose();
     salaryController.dispose();
-    shiftController.dispose();
-    timeController.dispose();
     numberController.dispose();
   }
 
@@ -46,6 +51,39 @@ class _AddServiceManScreenState extends State<AddServiceManScreen> {
     'BabySitter',
     'OldAgeCare'
   ];
+  List<String> workShift = [
+    'Morning-\n7am to 12pm',
+    'Afternoon-\n12pm to 5pm',
+    'Evening\n5pm to 9pm',
+    'Any shift\n7am to 9pm',
+  ];
+  List<String> jobTime = [
+    'Part-Time',
+    'Full-Time',
+  ];
+
+  void registerServiceman() async {
+    if (_addServiceManFormKey.currentState!.validate() && images.isNotEmpty) {
+      setState(() {
+        isLoading = true;
+      });
+      await adminServices.registerServiceman(
+        context: context,
+        name: serviceManNameController.text,
+        description: descriptionController.text,
+        salary: double.parse(salaryController.text),
+        phone: numberController.text,
+        address: addressController.text,
+        shift: shift,
+        time: time,
+        category: category,
+        images: images,
+      );
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   void selectImages() async {
     var res = await pickImages();
@@ -75,7 +113,9 @@ class _AddServiceManScreenState extends State<AddServiceManScreen> {
                   Icons.arrow_back_ios_new_sharp,
                   color: GlobalVariables.selectednavbarcolor,
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pop(context);
+                },
               ),
               const Padding(
                 padding: EdgeInsets.only(left: 60.0),
@@ -100,6 +140,7 @@ class _AddServiceManScreenState extends State<AddServiceManScreen> {
       ),
       body: SingleChildScrollView(
         child: Form(
+          key: _addServiceManFormKey,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Column(children: [
@@ -122,6 +163,7 @@ class _AddServiceManScreenState extends State<AddServiceManScreen> {
                       options: CarouselOptions(
                         viewportFraction: 1,
                         height: 200,
+                        enableInfiniteScroll: false,
                       ),
                     )
                   : GestureDetector(
@@ -132,7 +174,7 @@ class _AddServiceManScreenState extends State<AddServiceManScreen> {
                         dashPattern: const [10, 4],
                         strokeCap: StrokeCap.round,
                         child: Container(
-                          width: double.infinity,
+                          width: 380.w,
                           height: 150.h,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10)),
@@ -148,7 +190,7 @@ class _AddServiceManScreenState extends State<AddServiceManScreen> {
                                 height: 15,
                               ),
                               Text(
-                                'Select ServiceMan Images/certifications',
+                                'Select ServiceMan Image',
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 23, 59, 47),
                                   fontSize: 14,
@@ -168,57 +210,215 @@ class _AddServiceManScreenState extends State<AddServiceManScreen> {
                 hintText: 'ServiceMan Name ',
               ),
               AddServiceManTextField(
+                controller: addressController,
+                hintText: 'Address ',
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 5.h, right: 5.h, top: 7.h),
+                padding: EdgeInsets.only(left: 10.h, right: 10.h),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    color: Color.fromARGB(255, 182, 223, 223),
+                    boxShadow: const [
+                      BoxShadow(
+                        offset: Offset(0, 10),
+                        blurRadius: 50,
+                        color: Color.fromARGB(255, 255, 255, 255),
+                      )
+                    ]),
+                child: Theme(
+                  data: ThemeData(errorColor: Colors.black),
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                    controller: numberController,
+                    style: const TextStyle(
+                        color: Color.fromARGB(255, 54, 83, 73),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16),
+                    cursorColor: Color.fromARGB(255, 54, 83, 73),
+                    decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.only(left: 5),
+                        hintStyle: TextStyle(
+                          color: Color.fromARGB(255, 54, 83, 73),
+                        ),
+                        hintText: 'Phone number',
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none),
+                    validator: (val) {
+                      if (val == null || val.isEmpty) {
+                        return 'Enter your phone number';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              ),
+              AddServiceManTextField(
                 controller: descriptionController,
                 hintText: 'Description',
                 maxLines: 7,
               ),
-              AddServiceManTextField(
-                controller: salaryController,
-                hintText: 'Salary',
+              Container(
+                padding: const EdgeInsets.only(top: 20),
+                height: 50,
+                width: 360,
+                child: const Text(
+                  'Category',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 79, 110, 100),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ),
               ),
-              AddServiceManTextField(
-                controller: numberController,
-                hintText: 'Phone Number',
+              SizedBox(
+                width: 360,
+                child: DropdownButton(
+                  value: category,
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                  items: serviceCategories.map((String item) {
+                    return DropdownMenuItem(
+                      value: item,
+                      child: Text(
+                        item,
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 54, 83, 73),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (String? newVal) {
+                    setState(() {
+                      category = newVal!;
+                    });
+                  },
+                ),
               ),
-              AddServiceManTextField(
-                controller: shiftController,
-                hintText: 'Shift',
+              Container(
+                padding: const EdgeInsets.only(top: 20),
+                height: 50,
+                width: 360,
+                child: const Text(
+                  'User Type',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 79, 110, 100),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ),
               ),
-              AddServiceManTextField(
-                controller: timeController,
-                hintText: 'Work Time',
+              SizedBox(
+                width: 360,
+                child: DropdownButton(
+                  value: time,
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                  items: jobTime.map((String item) {
+                    return DropdownMenuItem(
+                      value: item,
+                      child: Text(
+                        item,
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 54, 83, 73),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (String? newVal) {
+                    setState(() {
+                      time = newVal!;
+                    });
+                  },
+                ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 12),
-                child: SizedBox(
-                  width: 370,
-                  child: DropdownButton(
-                    value: category,
-                    icon: const Icon(Icons.keyboard_arrow_down),
-                    items: serviceCategories.map((String item) {
-                      return DropdownMenuItem(
-                        value: item,
-                        child: Text(
-                          item,
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 54, 83, 73),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16),
+              Container(
+                padding: const EdgeInsets.only(top: 20),
+                height: 50,
+                width: 360,
+                child: const Text(
+                  'Shift',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 79, 110, 100),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ),
+              ),
+              SizedBox(
+                width: 360,
+                child: DropdownButton(
+                  value: shift,
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                  items: workShift.map((String item) {
+                    return DropdownMenuItem(
+                      value: item,
+                      child: Text(
+                        item,
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 54, 83, 73),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (String? newVal) {
+                    setState(() {
+                      shift = newVal!;
+                    });
+                  },
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 5.h, right: 5.h, top: 7.h),
+                padding: EdgeInsets.only(left: 10.h, right: 10.h),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    color: Color.fromARGB(255, 182, 223, 223),
+                    boxShadow: const [
+                      BoxShadow(
+                        offset: Offset(0, 10),
+                        blurRadius: 50,
+                        color: Color.fromARGB(255, 255, 255, 255),
+                      )
+                    ]),
+                child: Theme(
+                  data: ThemeData(errorColor: Colors.black),
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                    controller: salaryController,
+                    style: const TextStyle(
+                        color: Color.fromARGB(255, 54, 83, 73),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16),
+                    cursorColor: Color.fromARGB(255, 54, 83, 73),
+                    decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.only(left: 5),
+                        hintStyle: TextStyle(
+                          color: Color.fromARGB(255, 54, 83, 73),
                         ),
-                      );
-                    }).toList(),
-                    onChanged: (String? newVal) {
-                      setState(() {
-                        category = newVal!;
-                      });
+                        hintText: 'Salary',
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none),
+                    validator: (val) {
+                      if (val == null || val.isEmpty) {
+                        return 'Enter your salary';
+                      }
+                      return null;
                     },
                   ),
                 ),
               ),
               GestureDetector(
+                onTap: registerServiceman,
                 child: Container(
-                  margin:
-                      EdgeInsets.only(right: 50.h, left: 50.h, bottom: 10.h),
+                  margin: EdgeInsets.only(
+                      right: 50.h, left: 50.h, bottom: 10.h, top: 20),
                   alignment: Alignment.center,
                   height: 50,
                   decoration: BoxDecoration(
@@ -230,15 +430,18 @@ class _AddServiceManScreenState extends State<AddServiceManScreen> {
                             blurRadius: 50,
                             color: Color(0xffEEEEEE))
                       ]),
-                  child: const Text(
-                    'Register',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17),
-                  ),
+                  child: isLoading
+                      ? const Center(
+                          child: Loader(),
+                        )
+                      : const Text(
+                          'Register',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 54, 83, 73),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17),
+                        ),
                 ),
-                onTap: () {},
               ),
             ]),
           ),

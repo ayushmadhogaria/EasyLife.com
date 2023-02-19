@@ -1,4 +1,3 @@
-import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -20,7 +19,7 @@ class AddServiceManTextField extends StatelessWidget {
       padding: EdgeInsets.only(left: 10.h, right: 10.h),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.r),
-          color: Color.fromARGB(255, 182, 223, 223),
+          color: const Color.fromARGB(255, 182, 223, 223),
           boxShadow: const [
             BoxShadow(
               offset: Offset(0, 10),
@@ -29,14 +28,14 @@ class AddServiceManTextField extends StatelessWidget {
             )
           ]),
       child: Theme(
-        data: ThemeData(errorColor: Colors.white),
+        data: ThemeData(errorColor: Colors.black),
         child: TextFormField(
           controller: controller,
           style: const TextStyle(
               color: Color.fromARGB(255, 54, 83, 73),
               fontWeight: FontWeight.bold,
               fontSize: 16),
-          cursorColor: Color.fromARGB(255, 54, 83, 73),
+          cursorColor: const Color.fromARGB(255, 54, 83, 73),
           maxLines: maxLines,
           decoration: InputDecoration(
               contentPadding: const EdgeInsets.only(left: 5),

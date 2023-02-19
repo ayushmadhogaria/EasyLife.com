@@ -18,16 +18,24 @@ const servicemanSchema = mongoose.Schema({
   phone: {
     type: String,
     required: true,
+    validate: {
+      validator: function (v) {
+        return v.length === 10;
+      },
+      message: "Phone number must be 10 digits.",
+    },
+  },
+  address: {
+    type: String,
+    required: true,
   },
   shift: {
     type: String,
     required: true,
-    trim: true,
   },
-  worktime: {
+  time: {
     type: String,
     required: true,
-    trim: true,
   },
   category: {
     type: String,

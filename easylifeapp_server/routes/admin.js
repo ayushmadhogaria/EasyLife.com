@@ -10,9 +10,10 @@ adminRouter.post("/admin/add-serviceman", admin, async (req, res) => {
       name,
       description,
       salary,
+      address,
       phone,
       shift,
-      worktime,
+      time,
       category,
       images,
     } = req.body;
@@ -20,13 +21,36 @@ adminRouter.post("/admin/add-serviceman", admin, async (req, res) => {
       name,
       description,
       salary,
+      address,
       phone,
       shift,
-      worktime,
+      time,
       category,
       images,
     });
     serviceman = await serviceman.save();
+    res.json(serviceman);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+//fetch all the serviceman
+
+adminRouter.get("/admin/get-serviceman", admin, async (req, res) => {
+  try {
+    const servicemen = await ServiceMan.find({});
+    res.json(servicemen);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+//delete the serviceman
+adminRouter.post("/admin/delete-serviceman", admin, async (req, res) => {
+  try {
+    const { id } = req.body;
+    let serviceman = await ServiceMan.findByIdAndDelete(id);
     res.json(serviceman);
   } catch (e) {
     res.status(500).json({ error: e.message });
