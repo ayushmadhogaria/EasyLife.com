@@ -1,4 +1,7 @@
 import 'package:easylifeapp/constants/global_variables.dart';
+import 'package:easylifeapp/models/serviceman.dart';
+import 'package:easylifeapp/services/home_service.dart';
+import 'package:easylifeapp/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -15,6 +18,23 @@ class CategoryDetailsScreen extends StatefulWidget {
 }
 
 class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
+  List<Serviceman>? servicemanList;
+  final HomeService homeService = HomeService();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCategoryServiceman();
+  }
+
+  fetchCategoryServiceman() async {
+    servicemanList = await homeService.fetchCategoryServiceman(
+      context: context,
+      category: widget.category,
+    );
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +63,7 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 50.0),
                 child: Text(
-                  'Book ${widget.category}',
+                  'Hire ${widget.category}',
                   style: const TextStyle(
                       color: Color.fromARGB(255, 61, 117, 93),
                       fontWeight: FontWeight.bold),
@@ -61,19 +81,75 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
           ),
         ),
       ),
-      body: Column(children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          alignment: Alignment.topLeft,
-          child: Text(
-            'Hire professional ${widget.category} For Better Lifestyle',
-            style: const TextStyle(
-                fontSize: 18,
-                color: Color.fromARGB(255, 61, 117, 93),
-                fontWeight: FontWeight.w400),
-          ),
-        )
-      ]),
+      body: servicemanList == null
+          ? const Loader()
+          : Column(children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Hire professional ${widget.category} For Better Lifestyle',
+                  style: const TextStyle(
+                      fontSize: 18,
+                      color: Color.fromARGB(255, 61, 117, 93),
+                      fontWeight: FontWeight.w400),
+                ),
+              ),
+              SizedBox(
+                height: 180.h,
+                child: GridView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.only(
+                    left: 10,
+                  ),
+                  itemCount: servicemanList!.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1,
+                    childAspectRatio: 1.4,
+                    mainAxisSpacing: 10,
+                  ),
+                  itemBuilder: ((context, index) {
+                    final serviceman = servicemanList![index];
+                    return Column(
+                      children: [
+                        SizedBox(
+                          height: 130.h,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: GlobalVariables.unselectednavbarcolor,
+                                width: 0.5,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Image.network(
+                                serviceman.images[0],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          padding:
+                              const EdgeInsets.only(left: 0, top: 5, right: 15),
+                          child: Text(
+                            serviceman.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontSize: 16,
+                                color: Color.fromARGB(255, 61, 117, 93),
+                                fontWeight: FontWeight.w400),
+                          ),
+                        )
+                      ],
+                    );
+                  }),
+                ),
+              )
+            ]),
     );
   }
 }

@@ -35,7 +35,7 @@ adminRouter.post("/admin/add-serviceman", admin, async (req, res) => {
   }
 });
 
-//fetch all the serviceman
+//get all the serviceman
 
 adminRouter.get("/admin/get-serviceman", admin, async (req, res) => {
   try {
