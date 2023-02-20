@@ -1,8 +1,11 @@
 import 'package:easylifeapp/admin/screens/add_serviceman_screen.dart';
+import 'package:easylifeapp/models/serviceman.dart';
 import 'package:easylifeapp/screens/category_detail_screen.dart';
 import 'package:easylifeapp/screens/home_screen.dart';
 import 'package:easylifeapp/screens/login_screen.dart';
 import 'package:easylifeapp/screens/registration_screen.dart';
+import 'package:easylifeapp/screens/search_screen.dart';
+import 'package:easylifeapp/screens/serviceman_detail_screen.dart';
 import 'package:easylifeapp/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -39,6 +42,22 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => CategoryDetailsScreen(
           category: category,
+        ),
+      );
+    case SearchScreen.routeName:
+      var searchQuery = routeSettings.arguments as String;
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => SearchScreen(
+          searchQuery: searchQuery,
+        ),
+      );
+    case ServicemanDetailScreen.routeName:
+      var serviceman = routeSettings.arguments as Serviceman;
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => ServicemanDetailScreen(
+          serviceman: serviceman,
         ),
       );
     default:

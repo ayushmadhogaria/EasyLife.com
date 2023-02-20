@@ -1,38 +1,27 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easylifeapp/constants/global_variables.dart';
-import 'package:easylifeapp/providers/user_provider.dart';
+import 'package:easylifeapp/models/serviceman.dart';
 import 'package:easylifeapp/screens/search_screen.dart';
-import 'package:easylifeapp/widgets/address_box.dart';
-import 'package:easylifeapp/widgets/carousal_slider.dart';
-import 'package:easylifeapp/widgets/category_list.dart';
-import 'package:easylifeapp/widgets/recommeneded_service.dart';
+import 'package:easylifeapp/widgets/rating_stars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
-  static const String routeName = '/home';
-  const HomeScreen({super.key});
+class ServicemanDetailScreen extends StatefulWidget {
+  static const String routeName = '/serviceman-details';
+  final Serviceman serviceman;
+  const ServicemanDetailScreen({super.key, required this.serviceman});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<ServicemanDetailScreen> createState() => _ServicemanDetailScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
   void navigateToSearchScreen(String query) {
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
   }
 
-  final TextEditingController _searchController = TextEditingController();
-
-  @override
-  void dispose() {
-    super.dispose();
-    _searchController.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
       backgroundColor: GlobalVariables.loggedinbackgroundcolor,
       appBar: PreferredSize(
@@ -47,6 +36,15 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              InkWell(
+                child: const Icon(
+                  Icons.arrow_back_ios_new_sharp,
+                  color: Color.fromARGB(255, 57, 68, 63),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
               Expanded(
                 child: Container(
                     height: 40,
@@ -55,7 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(7),
                       elevation: 1.5,
                       child: TextFormField(
-                        controller: _searchController,
                         cursorColor: GlobalVariables.unselectednavbarcolor,
                         style: const TextStyle(
                             color: GlobalVariables.unselectednavbarcolor,
@@ -102,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 color: Colors.transparent,
                 height: 40,
-                margin: const EdgeInsets.symmetric(horizontal: 10),
+                margin: const EdgeInsets.symmetric(horizontal: 5),
                 child: const Icon(
                   Icons.mic,
                   color: Colors.white,
@@ -114,30 +111,62 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            AddressDetail(),
-            Container(
-              margin: const EdgeInsets.only(top: 20, bottom: 20),
-              child: GestureDetector(
-                child: const Text("We are at your service.",
-                    style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Color.fromARGB(255, 32, 131, 118),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18)),
-                onTap: () => {debugPrint("hello")},
-              ),
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.serviceman.id!,
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 61, 117, 93),
+                    fontSize: 15,
+                  ),
+                ),
+                const RatingStars(rating: 4),
+              ],
             ),
-            const SizedBox(
-              height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 20,
+              horizontal: 10,
             ),
-            CategoryList(),
-            CarousalImage(),
-            RecommendedService(),
-          ],
-        ),
-      ),
+            child: Column(
+              children: [
+                Text(
+                  widget.serviceman.name,
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 61, 117, 93),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+          CarouselSlider(
+            items: widget.serviceman.images.map(
+              (i) {
+                return Builder(
+                  builder: (BuildContext context) => Image.network(
+                    i,
+                    fit: BoxFit.cover,
+                    height: 200,
+                  ),
+                );
+              },
+            ).toList(),
+            options: CarouselOptions(
+              viewportFraction: 1,
+              enableInfiniteScroll: false,
+              height: 200,
+            ),
+          ),
+        ],
+      )),
     );
   }
 }

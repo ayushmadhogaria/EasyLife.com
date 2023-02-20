@@ -1,5 +1,6 @@
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/models/serviceman.dart';
+import 'package:easylifeapp/screens/serviceman_detail_screen.dart';
 import 'package:easylifeapp/services/home_service.dart';
 import 'package:easylifeapp/widgets/loader.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
     fetchCategoryServiceman();
   }
 
-  fetchCategoryServiceman() async {
+  Future<void> fetchCategoryServiceman() async {
     servicemanList = await homeService.fetchCategoryServiceman(
       context: context,
       category: widget.category,
@@ -83,73 +84,107 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
       ),
       body: servicemanList == null
           ? const Loader()
-          : Column(children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Hire professional ${widget.category} For Better Lifestyle',
-                  style: const TextStyle(
-                      fontSize: 18,
-                      color: Color.fromARGB(255, 61, 117, 93),
-                      fontWeight: FontWeight.w400),
-                ),
-              ),
-              SizedBox(
-                height: 180.h,
-                child: GridView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.only(
-                    left: 10,
-                  ),
-                  itemCount: servicemanList!.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1,
-                    childAspectRatio: 1.4,
-                    mainAxisSpacing: 10,
-                  ),
-                  itemBuilder: ((context, index) {
-                    final serviceman = servicemanList![index];
-                    return Column(
-                      children: [
-                        SizedBox(
-                          height: 130.h,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: GlobalVariables.unselectednavbarcolor,
-                                width: 0.5,
-                              ),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Image.network(
-                                serviceman.images[0],
-                              ),
-                            ),
+          : servicemanList!.isEmpty
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 200),
+                  child: Column(
+                    children: [
+                      Center(
+                        child: SizedBox(
+                          child: Image.asset(
+                            'assets/noservice.PNG',
                           ),
                         ),
-                        Container(
-                          alignment: Alignment.center,
-                          padding:
-                              const EdgeInsets.only(left: 0, top: 5, right: 15),
-                          child: Text(
-                            serviceman.name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontSize: 16,
-                                color: Color.fromARGB(255, 61, 117, 93),
-                                fontWeight: FontWeight.w400),
+                      ),
+                      const Text(
+                        'No serviceman available in this category currently! \n                          Sorry for inconvinience.',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 61, 117, 93),
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                )
+              : Column(children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Hire professional ${widget.category} For Better Lifestyle',
+                      style: const TextStyle(
+                          fontSize: 18,
+                          color: Color.fromARGB(255, 61, 117, 93),
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 170,
+                    child: GridView.builder(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.only(
+                        left: 15,
+                      ),
+                      itemCount: servicemanList!.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        childAspectRatio: 1.4,
+                        mainAxisSpacing: 20,
+                      ),
+                      itemBuilder: ((context, index) {
+                        final serviceman = servicemanList![index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              ServicemanDetailScreen.routeName,
+                              arguments: serviceman,
+                            );
+                          },
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 130,
+                                width: double.infinity,
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color:
+                                          GlobalVariables.unselectednavbarcolor,
+                                      width: 0.5,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Image.network(
+                                      serviceman.images[0],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.only(
+                                    left: 0, top: 5, right: 15),
+                                child: Text(
+                                  serviceman.name,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Color.fromARGB(255, 61, 117, 93),
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              )
+                            ],
                           ),
-                        )
-                      ],
-                    );
-                  }),
-                ),
-              )
-            ]),
+                        );
+                      }),
+                    ),
+                  )
+                ]),
     );
   }
 }

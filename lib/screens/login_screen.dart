@@ -1,7 +1,6 @@
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/screens/registration_screen.dart';
 import 'package:easylifeapp/services/auth_service.dart';
-import 'package:easylifeapp/widgets/bottom_bar.dart';
 import 'package:easylifeapp/widgets/custom_button.dart';
 import 'package:easylifeapp/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
