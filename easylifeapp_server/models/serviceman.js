@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const ratingSchema = require("./rating");
 
 const servicemanSchema = mongoose.Schema({
   name: {
@@ -47,6 +48,7 @@ const servicemanSchema = mongoose.Schema({
       required: true,
     },
   ],
+  ratings: [ratingSchema],
 });
 
 const ServiceMan = mongoose.model("ServiceMan", servicemanSchema);

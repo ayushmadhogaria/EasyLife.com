@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:easylifeapp/models/rating.dart';
+
 class Serviceman {
   final String name;
   final String description;
@@ -11,6 +13,7 @@ class Serviceman {
   final String category;
   final List<String> images;
   final String? id;
+  final List<Rating>? rating;
 
   Serviceman({
     required this.name,
@@ -23,6 +26,7 @@ class Serviceman {
     required this.category,
     required this.images,
     this.id,
+    this.rating,
   });
 
   Map<String, dynamic> toMap() {
@@ -37,6 +41,7 @@ class Serviceman {
       'category': category,
       'images': images,
       'id': id,
+      'rating': rating,
     };
   }
 
@@ -52,6 +57,13 @@ class Serviceman {
       images: List<String>.from(map['images']),
       category: map['category'] ?? '',
       id: map['_id'],
+      rating: map['ratings'] != null
+          ? List<Rating>.from(
+              map['ratings']?.map(
+                (x) => Rating.fromMap(x),
+              ),
+            )
+          : null,
     );
   }
 

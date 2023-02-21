@@ -1,5 +1,6 @@
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/models/serviceman.dart';
+import 'package:easylifeapp/screens/serviceman_detail_screen.dart';
 import 'package:easylifeapp/services/search_service.dart';
 import 'package:easylifeapp/widgets/address_box.dart';
 import 'package:easylifeapp/widgets/loader.dart';
@@ -42,6 +43,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: GlobalVariables.loggedinbackgroundcolor,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.h),
           child: AppBar(
@@ -138,15 +140,44 @@ class _SearchScreenState extends State<SearchScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: serviceman!.length,
-                      itemBuilder: (context, index) {
-                        return SearchedServiceman(
-                            serviceman: serviceman![index]);
-                      },
-                    ),
-                  ),
+                  serviceman!.isEmpty
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 200),
+                          child: Column(
+                            children: [
+                              Center(
+                                child: SizedBox(
+                                  child: Image.asset(
+                                    'assets/noservice.PNG',
+                                  ),
+                                ),
+                              ),
+                              const Text(
+                                'No serviceman of this name exists! \n    Try searching valid serviceman.',
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 61, 117, 93),
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Expanded(
+                          child: ListView.builder(
+                            itemCount: serviceman!.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, ServicemanDetailScreen.routeName,
+                                      arguments: serviceman![index]);
+                                },
+                                child: SearchedServiceman(
+                                    serviceman: serviceman![index]),
+                              );
+                            },
+                          ),
+                        ),
                 ],
               ));
   }

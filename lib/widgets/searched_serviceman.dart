@@ -12,6 +12,15 @@ class SearchedServiceman extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double totalRating = 0;
+    for (int i = 0; i < serviceman.rating!.length; i++) {
+      totalRating += serviceman.rating![i].rating;
+    }
+    double avgRating = 0;
+    if (totalRating != 0) {
+      avgRating = totalRating / serviceman.rating!.length;
+    }
+
     return Column(
       children: [
         Container(
@@ -22,7 +31,7 @@ class SearchedServiceman extends StatelessWidget {
               children: [
                 Image.network(
                   serviceman.images[0],
-                  fit: BoxFit.fitHeight,
+                  fit: BoxFit.contain,
                   height: 150,
                   width: 135,
                 ),
@@ -55,8 +64,8 @@ class SearchedServiceman extends StatelessWidget {
                     Container(
                         width: 235,
                         padding: const EdgeInsets.only(left: 10, top: 5),
-                        child: const RatingStars(
-                          rating: 4,
+                        child: RatingStars(
+                          rating: avgRating,
                         )),
                     Container(
                       width: 235,

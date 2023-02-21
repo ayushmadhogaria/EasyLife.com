@@ -43,4 +43,39 @@ class HomeService {
     }
     return servicemanList;
   }
+
+  Future<Serviceman> fetchRecommendedServiceman({
+    required BuildContext context,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    Serviceman serviceman = Serviceman(
+        name: '',
+        description: '',
+        salary: 0,
+        phone: '',
+        address: '',
+        shift: '',
+        time: '',
+        category: '',
+        images: []);
+    try {
+      http.Response res = await http.get(
+        Uri.parse('$uri/api/recommended-for-you'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+      );
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          serviceman = Serviceman.fromJson(res.body);
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return serviceman;
+  }
 }
