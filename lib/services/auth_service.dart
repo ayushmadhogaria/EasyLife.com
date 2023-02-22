@@ -33,6 +33,7 @@ class AuthService {
         phone: phone,
         address: '',
         token: '',
+        wishlist: [],
       );
 
       http.Response res = await http.post(

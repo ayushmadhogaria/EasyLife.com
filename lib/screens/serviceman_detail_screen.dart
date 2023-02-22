@@ -4,6 +4,7 @@ import 'package:easylifeapp/models/serviceman.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
 import 'package:easylifeapp/screens/search_screen.dart';
 import 'package:easylifeapp/services/serviceman_details_services.dart';
+import 'package:easylifeapp/widgets/bottom_bar.dart';
 import 'package:easylifeapp/widgets/rating_stars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -44,7 +45,26 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
   }
 
   void navigateToSearchScreen(String query) {
+    if (query.length < 1) return;
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
+
+    setState(() {
+      _searchController.clear();
+    });
+  }
+
+  void addToWishlist() {
+    servicemanDetailsServices.addToWishlist(
+        context: context, serviceman: widget.serviceman);
+    Navigator.pushNamed(context, BottomBar.routeName);
+  }
+
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _searchController.dispose();
   }
 
   @override
@@ -80,6 +100,7 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
                       borderRadius: BorderRadius.circular(7),
                       elevation: 1.5,
                       child: TextFormField(
+                        controller: _searchController,
                         cursorColor: GlobalVariables.unselectednavbarcolor,
                         style: const TextStyle(
                             color: GlobalVariables.unselectednavbarcolor,
@@ -396,7 +417,7 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: addToWishlist,
               child: Container(
                 margin: EdgeInsets.only(right: 40.h, left: 40.h, top: 10.h),
                 alignment: Alignment.center,
@@ -431,7 +452,7 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.0),
-              child: Text("Rate Our Service",
+              child: Text("Rate Your Experience",
                   style: TextStyle(
                       color: Color.fromARGB(255, 16, 94, 83),
                       fontWeight: FontWeight.bold,

@@ -1,7 +1,7 @@
 const express = require("express");
 const servicemanRouter = express.Router();
 const auth = require("../middlewares/auth");
-const ServiceMan = require("../models/serviceman");
+const { ServiceMan } = require("../models/serviceman");
 
 servicemanRouter.get("/api/serviceman/", auth, async (req, res) => {
   try {

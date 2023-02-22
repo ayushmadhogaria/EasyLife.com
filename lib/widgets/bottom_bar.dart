@@ -1,8 +1,11 @@
 import 'package:badges/badges.dart' as badges;
+import 'package:easylifeapp/providers/user_provider.dart';
 import 'package:easylifeapp/screens/account_screen.dart';
 import 'package:easylifeapp/screens/home_screen.dart';
+import 'package:easylifeapp/screens/wishlist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:easylifeapp/screens/settings_screen.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/global_variables.dart';
 
@@ -22,9 +25,7 @@ class _BottomBarState extends State<BottomBar> {
   List<Widget> pages = [
     const HomeScreen(),
     const AccountScreen(),
-    const Center(
-      child: Text("hello"),
-    ),
+    const WishlistScreen(),
     const SettingsScreen(),
   ];
 
@@ -36,6 +37,7 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
+    final userWishlistLen = context.watch<UserProvider>().user.wishlist;
     return Scaffold(
       body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
@@ -93,16 +95,16 @@ class _BottomBarState extends State<BottomBar> {
                   ),
                 ),
               ),
-              child: const badges.Badge(
-                badgeStyle: badges.BadgeStyle(
+              child: badges.Badge(
+                badgeStyle: const badges.BadgeStyle(
                   badgeColor: Color.fromARGB(255, 16, 94, 83),
                   padding: EdgeInsets.all(7),
                 ),
                 badgeContent: Text(
-                  '2',
-                  style: TextStyle(color: Colors.white),
+                  userWishlistLen.length.toString(),
+                  style: const TextStyle(color: Colors.white),
                 ),
-                child: Icon(Icons.favorite_border),
+                child: const Icon(Icons.favorite_border),
               ),
             ),
             label: 'Wishlist',

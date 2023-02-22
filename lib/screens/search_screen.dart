@@ -37,6 +37,7 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void navigateToSearchScreen(String query) {
+    if (query.length < 1) return;
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
   }
 

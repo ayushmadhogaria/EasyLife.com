@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { servicemanSchema } = require("./serviceman");
 
 const userSchema = mongoose.Schema({
   name: {
@@ -41,6 +42,15 @@ const userSchema = mongoose.Schema({
     type: String,
     default: "",
   },
+  wishlist: [
+    {
+      serviceman: servicemanSchema,
+      duration: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
 });
 
 const User = mongoose.model("User", userSchema);

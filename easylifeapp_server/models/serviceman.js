@@ -52,4 +52,4 @@ const servicemanSchema = mongoose.Schema({
 });
 
 const ServiceMan = mongoose.model("ServiceMan", servicemanSchema);
-module.exports = ServiceMan;
+module.exports = { ServiceMan, servicemanSchema };
