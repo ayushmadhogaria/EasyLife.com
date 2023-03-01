@@ -1,4 +1,5 @@
 import 'package:easylifeapp/constants/global_variables.dart';
+import 'package:easylifeapp/screens/address_screen.dart';
 import 'package:easylifeapp/screens/search_screen.dart';
 import 'package:easylifeapp/widgets/address_box.dart';
 import 'package:easylifeapp/widgets/service_total.dart';
@@ -25,6 +26,14 @@ class _WishlistScreenState extends State<WishlistScreen> {
     });
   }
 
+  void navigateToAddressScreen(int sum) {
+    Navigator.pushNamed(
+      context,
+      AddressScreen.routeName,
+      arguments: sum.toString(),
+    );
+  }
+
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -36,6 +45,10 @@ class _WishlistScreenState extends State<WishlistScreen> {
   @override
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>().user;
+    int sum = 0;
+    user.wishlist
+        .map((e) => sum += e['duration'] * e['serviceman']['salary'] as int)
+        .toList();
     return Scaffold(
       backgroundColor: GlobalVariables.loggedinbackgroundcolor,
       appBar: PreferredSize(
@@ -122,7 +135,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
           const AddressDetail(),
           const ServiceTotal(),
           GestureDetector(
-            onTap: () {},
+            onTap: () => navigateToAddressScreen(sum),
             child: Container(
               margin: EdgeInsets.only(right: 30.h, left: 30.h, top: 10.h),
               alignment: Alignment.center,

@@ -1,5 +1,6 @@
 import 'package:easylifeapp/admin/screens/add_serviceman_screen.dart';
 import 'package:easylifeapp/models/serviceman.dart';
+import 'package:easylifeapp/screens/address_screen.dart';
 import 'package:easylifeapp/screens/category_detail_screen.dart';
 import 'package:easylifeapp/screens/home_screen.dart';
 import 'package:easylifeapp/screens/login_screen.dart';
@@ -58,6 +59,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => ServicemanDetailScreen(
           serviceman: serviceman,
+        ),
+      );
+    case AddressScreen.routeName:
+      var totalAmount = routeSettings.arguments as String;
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => AddressScreen(
+          totalAmount: totalAmount,
         ),
       );
     default:

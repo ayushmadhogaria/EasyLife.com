@@ -142,6 +142,19 @@ class _WishlistServicemanState extends State<WishlistServiceman> {
             ],
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0, top: 5),
+          child: Container(
+            alignment: Alignment.topLeft,
+            child: const Text(
+              'Duration',
+              style: TextStyle(
+                  color: Color.fromARGB(255, 90, 116, 104),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17),
+            ),
+          ),
+        ),
         Container(
           margin: const EdgeInsets.all(10),
           child: Row(
