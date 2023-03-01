@@ -32,7 +32,7 @@ class ServicemanDetailsServices {
         onSuccess: () {
           User user = userProvider.user
               .copyWith(wishlist: jsonDecode(res.body)['wishlist']);
-          userProvider.serUserFromModel(user);
+          userProvider.setUserFromModel(user);
         },
       );
     } catch (e) {

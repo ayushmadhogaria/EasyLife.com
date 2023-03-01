@@ -21,7 +21,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void serUserFromModel(User user) {
+  void setUserFromModel(User user) {
     _user = user;
     notifyListeners();
   }

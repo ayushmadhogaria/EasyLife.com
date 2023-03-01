@@ -1,7 +1,10 @@
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/constants/utils.dart';
+import 'package:easylifeapp/models/user.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
+import 'package:easylifeapp/services/address_service.dart';
 import 'package:easylifeapp/widgets/appointment_textfield.dart';
+import 'package:easylifeapp/widgets/service_total.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pay/pay.dart';
@@ -28,6 +31,7 @@ class _AddressScreenState extends State<AddressScreen> {
   TimeOfDay? _time;
 
   List<PaymentItem> paymentItems = [];
+  final AddressServices addressServices = AddressServices();
 
   @override
   void initState() {
@@ -48,6 +52,21 @@ class _AddressScreenState extends State<AddressScreen> {
     wardController.dispose();
     districtController.dispose();
     super.dispose();
+  }
+
+  void onPayResult() {
+    if (Provider.of<UserProvider>(context, listen: false)
+        .user
+        .address
+        .isEmpty) {
+      addressServices.saveUserAddress(context: context, address: userAddress);
+    }
+    addressServices.bookAppointment(
+        context: context,
+        address: userAddress,
+        appointDate: _date.toString(),
+        appointTime: _time.toString(),
+        totalAmount: double.parse(widget.totalAmount));
   }
 
   void payPressed(String addressFormProvider) {
@@ -140,6 +159,26 @@ class _AddressScreenState extends State<AddressScreen> {
                       initialDate: DateTime.now(),
                       firstDate: DateTime.now(),
                       lastDate: DateTime(2025),
+                      builder: (context, child) {
+                        return Theme(
+                          data: Theme.of(context).copyWith(
+                            colorScheme: const ColorScheme.light(
+                              primary: GlobalVariables
+                                  .loggedinbackgroundcolor, // <-- SEE HERE
+                              onPrimary: Colors.black, // <-- SEE HERE
+                              onSurface: GlobalVariables
+                                  .unselectednavbarcolor, // <-- SEE HERE
+                            ),
+                            textButtonTheme: TextButtonThemeData(
+                              style: TextButton.styleFrom(
+                                primary: GlobalVariables
+                                    .unselectednavbarcolor, // button text color
+                              ),
+                            ),
+                          ),
+                          child: child!,
+                        );
+                      },
                     );
                     if (result != null) {
                       setState(() {
@@ -360,9 +399,23 @@ class _AddressScreenState extends State<AddressScreen> {
                       color: Color.fromARGB(255, 54, 83, 73),
                     ),
                   ),
+                  // GooglePayButton(
+                  //   onPressed: () => payPressed(address),
+                  //   paymentConfigurationAsset: 'gpay.json',
+                  //   onPaymentResult: onPayResult,
+                  //   paymentItems: paymentItems,
+                  //   height: 50,
+                  //   // style: GooglePayButtonStyle.black,
+                  //   type: GooglePayButtonType.buy,
+                  //   margin: const EdgeInsets.only(top: 15),
+                  //   loadingIndicator: const Center(
+                  //     child: Loader(),
+                  //   ),
+                  // ),
                   GestureDetector(
                     onTap: () => {
                       payPressed(address),
+                      paymentItems,
                       showDialog(
                           context: context,
                           builder: (context) {
@@ -414,7 +467,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                     )),
                                 TextButton(
                                     onPressed: () => {
-                                          paymentItems: paymentItems,
+                                          onPayResult,
                                         },
                                     child: const Text(
                                       "Confirm",

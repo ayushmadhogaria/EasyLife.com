@@ -1,6 +1,7 @@
 const express = require("express");
 const userRouter = express.Router();
 const auth = require("../middlewares/auth");
+const Appointment = require("../models/appointment");
 const { ServiceMan } = require("../models/serviceman");
 const User = require("../models/user");
 
@@ -53,6 +54,51 @@ userRouter.delete("/api/remove-from-wishlist/:id", auth, async (req, res) => {
     }
     user = await user.save();
     res.json(user);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+//post req for saving user address
+userRouter.post("/api/save-user-address", auth, async (req, res) => {
+  try {
+    const { address } = req.body;
+    let user = await User.findById(req.user);
+    user.address = address;
+    user = await user.save();
+    res.json(user);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+//booking appointment
+userRouter.post("/api/appointment", auth, async (req, res) => {
+  try {
+    const {
+      wishlist,
+      servicemans,
+      totalAmount,
+      address,
+      appointDate,
+      appointTime,
+    } = req.body;
+
+    let user = await User.findById(req.user);
+    user.wishlist = [];
+    user = await user.save();
+
+    let appointment = new Appointment({
+      servicemans,
+      totalAmount,
+      address,
+      appointDate,
+      appointTime,
+      userId: req.user,
+      requestedAt: new Date().getTime(),
+    });
+    appointment = await appointment.save();
+    res.json(appointment);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
