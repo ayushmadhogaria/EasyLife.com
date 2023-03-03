@@ -1,6 +1,8 @@
 import 'package:easylifeapp/admin/screens/add_serviceman_screen.dart';
+import 'package:easylifeapp/models/appointment.dart';
 import 'package:easylifeapp/models/serviceman.dart';
 import 'package:easylifeapp/screens/address_screen.dart';
+import 'package:easylifeapp/screens/appointment_details.dart';
 import 'package:easylifeapp/screens/category_detail_screen.dart';
 import 'package:easylifeapp/screens/home_screen.dart';
 import 'package:easylifeapp/screens/login_screen.dart';
@@ -67,6 +69,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => AddressScreen(
           totalAmount: totalAmount,
+        ),
+      );
+    case AppointmentDetailScreen.routeName:
+      var appointment = routeSettings.arguments as Appointment;
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => AppointmentDetailScreen(
+          appointment: appointment,
         ),
       );
     default:

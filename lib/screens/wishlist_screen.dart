@@ -135,7 +135,19 @@ class _WishlistScreenState extends State<WishlistScreen> {
           const AddressDetail(),
           const ServiceTotal(),
           GestureDetector(
-            onTap: () => navigateToAddressScreen(sum),
+            onTap: () {
+              if (sum > 0) {
+                navigateToAddressScreen(sum);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      "You have no services in wishlist.",
+                    ),
+                  ),
+                );
+              }
+            },
             child: Container(
               margin: EdgeInsets.only(right: 30.h, left: 30.h, top: 10.h),
               alignment: Alignment.center,

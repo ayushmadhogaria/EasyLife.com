@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 class IndividualBooking extends StatelessWidget {
   final String image;
+
   const IndividualBooking({super.key, required this.image});
 
   @override

@@ -1,5 +1,6 @@
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/models/appointment.dart';
+import 'package:easylifeapp/screens/appointment_details.dart';
 import 'package:easylifeapp/services/account_service.dart';
 import 'package:easylifeapp/widgets/individual_booking.dart';
 import 'package:easylifeapp/widgets/loader.dart';
@@ -90,9 +91,19 @@ class _BookingsState extends State<Bookings> {
                           scrollDirection: Axis.horizontal,
                           itemCount: appointments!.length,
                           itemBuilder: ((context, index) {
-                            return IndividualBooking(
-                              image:
-                                  appointments![index].servicemans[0].images[0],
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  AppointmentDetailScreen.routeName,
+                                  arguments: appointments![index],
+                                );
+                              },
+                              child: IndividualBooking(
+                                image: appointments![index]
+                                    .servicemans[0]
+                                    .images[0],
+                              ),
                             );
                           }),
                         )),

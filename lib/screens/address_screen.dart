@@ -1,12 +1,11 @@
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/constants/utils.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
-import 'package:easylifeapp/screens/home_screen.dart';
 import 'package:easylifeapp/services/address_service.dart';
 import 'package:easylifeapp/widgets/appointment_textfield.dart';
-import 'package:easylifeapp/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:pay/pay.dart';
 import 'package:provider/provider.dart';
 
@@ -63,7 +62,7 @@ class _AddressScreenState extends State<AddressScreen> {
     await addressServices.bookAppointment(
         context: context,
         address: userAddress,
-        appointDate: _date.toString(),
+        appointDate: DateFormat.yMMMEd().format(_date!),
         appointTime: _time.toString(),
         totalAmount: double.parse(widget.totalAmount));
   }
@@ -165,8 +164,7 @@ class _AddressScreenState extends State<AddressScreen> {
                               primary: GlobalVariables
                                   .loggedinbackgroundcolor, // <-- SEE HERE
                               onPrimary: Colors.black, // <-- SEE HERE
-                              onSurface: GlobalVariables
-                                  .unselectednavbarcolor, // <-- SEE HERE
+                              onSurface: Colors.black, // <-- SEE HERE
                             ),
                             textButtonTheme: TextButtonThemeData(
                               style: TextButton.styleFrom(
@@ -225,6 +223,25 @@ class _AddressScreenState extends State<AddressScreen> {
                       context: context,
                       initialTime: TimeOfDay.now(),
                       initialEntryMode: TimePickerEntryMode.dial,
+                      builder: (context, child) {
+                        return Theme(
+                          data: Theme.of(context).copyWith(
+                            colorScheme: const ColorScheme.light(
+                              primary: GlobalVariables
+                                  .unselectednavbarcolor, // <-- SEE HERE
+                              onPrimary: Colors.black, // <-- SEE HERE
+                              onSurface: Colors.black, // <-- SEE HERE
+                            ),
+                            textButtonTheme: TextButtonThemeData(
+                              style: TextButton.styleFrom(
+                                primary: GlobalVariables
+                                    .unselectednavbarcolor, // button text color
+                              ),
+                            ),
+                          ),
+                          child: child!,
+                        );
+                      },
                     );
                     if (timeresult != null) {
                       setState(() {
@@ -251,7 +268,7 @@ class _AddressScreenState extends State<AddressScreen> {
                         Padding(
                           padding: EdgeInsets.only(left: 8.0),
                           child: Icon(
-                            Icons.watch,
+                            Icons.alarm,
                             color: Color.fromARGB(255, 50, 77, 65),
                           ),
                         ),
@@ -398,19 +415,6 @@ class _AddressScreenState extends State<AddressScreen> {
                       color: Color.fromARGB(255, 54, 83, 73),
                     ),
                   ),
-                  // GooglePayButton(
-                  //   onPressed: () => payPressed(address),
-                  //   paymentConfigurationAsset: 'gpay.json',
-                  //   onPaymentResult: onPayResult,
-                  //   paymentItems: paymentItems,
-                  //   height: 50,
-                  //   // style: GooglePayButtonStyle.black,
-                  //   type: GooglePayButtonType.buy,
-                  //   margin: const EdgeInsets.only(top: 15),
-                  //   loadingIndicator: const Center(
-                  //     child: Loader(),
-                  //   ),
-                  // ),
                   GestureDetector(
                     onTap: () => {
                       payPressed(address),
