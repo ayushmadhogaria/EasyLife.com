@@ -17,11 +17,11 @@ class ServiceTotal extends StatelessWidget {
       child: Row(children: [
         const Text(
           'Estimated Total  | ',
-          style: const TextStyle(
-              color: Color.fromARGB(255, 16, 94, 83), fontSize: 18),
+          style:
+              TextStyle(color: Color.fromARGB(255, 16, 94, 83), fontSize: 18),
         ),
         Text(
-          '\Rs. $sum  ',
+          'Rs. $sum  ',
           style: const TextStyle(
               color: Color.fromARGB(255, 16, 94, 83),
               fontWeight: FontWeight.bold,

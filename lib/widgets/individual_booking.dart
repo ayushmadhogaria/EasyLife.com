@@ -1,5 +1,7 @@
 import 'package:easylifeapp/constants/global_variables.dart';
+import 'package:easylifeapp/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class IndividualBooking extends StatelessWidget {
   final String image;
@@ -7,6 +9,7 @@ class IndividualBooking extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: DecoratedBox(

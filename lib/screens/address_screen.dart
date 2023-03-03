@@ -1,10 +1,10 @@
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/constants/utils.dart';
-import 'package:easylifeapp/models/user.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
+import 'package:easylifeapp/screens/home_screen.dart';
 import 'package:easylifeapp/services/address_service.dart';
 import 'package:easylifeapp/widgets/appointment_textfield.dart';
-import 'package:easylifeapp/widgets/service_total.dart';
+import 'package:easylifeapp/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pay/pay.dart';
@@ -24,7 +24,6 @@ class _AddressScreenState extends State<AddressScreen> {
   final TextEditingController localityController = TextEditingController();
   final TextEditingController wardController = TextEditingController();
   final TextEditingController districtController = TextEditingController();
-  final TextEditingController _paymenttextController = TextEditingController();
   final _addressFormKey = GlobalKey<FormState>();
   String userAddress = "";
   DateTime? _date;
@@ -54,14 +53,14 @@ class _AddressScreenState extends State<AddressScreen> {
     super.dispose();
   }
 
-  void onPayResult() {
+  void onPayResult() async {
     if (Provider.of<UserProvider>(context, listen: false)
         .user
         .address
         .isEmpty) {
       addressServices.saveUserAddress(context: context, address: userAddress);
     }
-    addressServices.bookAppointment(
+    await addressServices.bookAppointment(
         context: context,
         address: userAddress,
         appointDate: _date.toString(),
@@ -416,70 +415,95 @@ class _AddressScreenState extends State<AddressScreen> {
                     onTap: () => {
                       payPressed(address),
                       paymentItems,
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                      if (_date == null || _time == null)
+                        {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                "You need to select the date and time slot for appointment.",
                               ),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 247, 247, 247),
-                              title: Row(
-                                children: const [
-                                  Icon(
-                                    Icons.wallet,
-                                    size: 20,
-                                    color: Color.fromARGB(255, 51, 66, 60),
+                            ),
+                          ),
+                        }
+                      else
+                        {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  Text(
-                                    ' Confirm Payment Information',
-                                    style: TextStyle(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 247, 247, 247),
+                                  title: Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.wallet,
+                                        size: 20,
+                                        color: Color.fromARGB(255, 51, 66, 60),
+                                      ),
+                                      Text(
+                                        ' Confirm Payment Information',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 51, 66, 60),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 17,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  content: Text(
+                                    'Rs.${widget.totalAmount}',
+                                    style: const TextStyle(
                                       color: Color.fromARGB(255, 51, 66, 60),
                                       fontWeight: FontWeight.bold,
                                       fontSize: 17,
                                     ),
                                   ),
-                                ],
-                              ),
-                              content: TextField(
-                                controller: _paymenttextController,
-                                decoration: InputDecoration(
-                                  hintText: 'Rs. ${widget.totalAmount}',
-                                  hintStyle: const TextStyle(
-                                    color: Color.fromARGB(255, 51, 66, 60),
-                                    fontSize: 17,
-                                  ),
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text(
-                                      "Cancel",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600,
-                                          color:
-                                              Color.fromARGB(255, 23, 59, 47)),
-                                    )),
-                                TextButton(
-                                    onPressed: () => {
-                                          onPayResult,
+                                  // content: TextField(
+                                  //   controller: _paymenttextController,
+                                  //   decoration: InputDecoration(
+                                  //     hintText: 'Rs. ${widget.totalAmount}',
+                                  //     hintStyle: const TextStyle(
+                                  //       color: Color.fromARGB(255, 51, 66, 60),
+                                  //       fontSize: 17,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
                                         },
-                                    child: const Text(
-                                      "Confirm",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600,
-                                          color:
-                                              Color.fromARGB(255, 23, 59, 47)),
-                                    )),
-                              ],
-                            );
-                          })
+                                        child: const Text(
+                                          "Cancel",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color.fromARGB(
+                                                  255, 23, 59, 47)),
+                                        )),
+                                    TextButton(
+                                        onPressed: () {
+                                          onPayResult();
+                                          Navigator.pop(context);
+                                          // Navigator.pushNamed(
+                                          //     context, AddressScreen.routeName);
+                                        },
+                                        child: const Text(
+                                          "Confirm",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color.fromARGB(
+                                                  255, 23, 59, 47)),
+                                        )),
+                                  ],
+                                );
+                              })
+                        },
                     },
                     child: Container(
                       margin:

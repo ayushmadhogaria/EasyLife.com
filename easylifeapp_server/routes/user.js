@@ -75,14 +75,16 @@ userRouter.post("/api/save-user-address", auth, async (req, res) => {
 //booking appointment
 userRouter.post("/api/appointment", auth, async (req, res) => {
   try {
-    const {
-      wishlist,
-      servicemans,
-      totalAmount,
-      address,
-      appointDate,
-      appointTime,
-    } = req.body;
+    const { wishlist, totalAmount, address, appointDate, appointTime } =
+      req.body;
+
+    let servicemans = [];
+
+    for (let i = 0; i < wishlist.length; i++) {
+      let serviceman = await ServiceMan.findById(wishlist[i].serviceman._id);
+      servicemans.push({ serviceman, duration: wishlist[i].duration });
+      await serviceman.save();
+    }
 
     let user = await User.findById(req.user);
     user.wishlist = [];
@@ -99,6 +101,17 @@ userRouter.post("/api/appointment", auth, async (req, res) => {
     });
     appointment = await appointment.save();
     res.json(appointment);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+//viewing my appointments
+
+userRouter.get("/api/my/appointments", auth, async (req, res) => {
+  try {
+    const appointments = await Appointment.find({ user: req.user });
+    res.json(appointments);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }

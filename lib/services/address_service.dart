@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:easylifeapp/constants/error_handler.dart';
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/constants/utils.dart';
-import 'package:easylifeapp/models/serviceman.dart';
 import 'package:easylifeapp/models/user.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 class AddressServices {
+  //save user address
   void saveUserAddress({
     required BuildContext context,
     required String address,
@@ -42,7 +42,7 @@ class AddressServices {
   }
 
   //book appointments
-  void bookAppointment({
+  Future<void> bookAppointment({
     required BuildContext context,
     required String address,
     required String appointDate,
@@ -72,36 +72,6 @@ class AddressServices {
             wishlist: [],
           );
           userProvider.setUserFromModel(user);
-        },
-      );
-    } catch (e) {
-      showSnackBar(context, e.toString());
-    }
-  }
-
-  void deleteServiceman(
-      {required BuildContext context,
-      required Serviceman serviceman,
-      required VoidCallback onSuccess}) async {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-    try {
-      http.Response res = await http.post(
-        Uri.parse('$uri/admin/delete-serviceman'),
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-          'x-auth-token': userProvider.user.token,
-        },
-        body: jsonEncode(
-          {
-            'id': serviceman.id,
-          },
-        ),
-      );
-      httpErrorHandle(
-        response: res,
-        context: context,
-        onSuccess: () {
-          onSuccess();
         },
       );
     } catch (e) {
