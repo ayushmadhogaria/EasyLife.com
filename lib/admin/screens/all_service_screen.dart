@@ -50,98 +50,107 @@ class _AllServiceManScreenState extends State<AllServiceManScreen> {
         : Scaffold(
             backgroundColor: GlobalVariables.loggedinbackgroundcolor,
             body: GridView.builder(
-                itemCount: serviceman!.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
-                itemBuilder: (context, index) {
-                  final servicemanData = serviceman![index];
-                  return Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: SizedBox(
-                          height: 140,
-                          child: IndividualBooking(
-                            image: servicemanData.images[0],
-                          ),
+              itemCount: serviceman!.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2),
+              itemBuilder: (context, index) {
+                final servicemanData = serviceman![index];
+                return Column(
+                  children: [
+                    Text(
+                      servicemanData.category,
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 54, 83, 73),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: SizedBox(
+                        height: 120,
+                        child: IndividualBooking(
+                          image: servicemanData.images[0],
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Text(
-                                servicemanData.name,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                                style: const TextStyle(
-                                    color: Color.fromARGB(255, 54, 83, 73),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16),
-                              ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              servicemanData.name,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: const TextStyle(
+                                  color: Color.fromARGB(255, 54, 83, 73),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16),
                             ),
                           ),
-                          IconButton(
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 233, 250, 244),
-                                        title: const Text(
-                                          "Are you sure to delete this serviceman?",
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w400,
-                                              color: Color.fromARGB(
-                                                  255, 23, 59, 47)),
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    backgroundColor: const Color.fromARGB(
+                                        255, 233, 250, 244),
+                                    title: const Text(
+                                      "Are you sure to delete this serviceman?",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w400,
+                                          color:
+                                              Color.fromARGB(255, 23, 59, 47)),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text(
+                                            "No",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600,
+                                                color: Color.fromARGB(
+                                                    255, 23, 59, 47)),
+                                          )),
+                                      TextButton(
+                                          onPressed: () => {
+                                                deleteServiceman(
+                                                    servicemanData, index),
+                                                Navigator.pop(context),
                                               },
-                                              child: const Text(
-                                                "No",
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Color.fromARGB(
-                                                        255, 23, 59, 47)),
-                                              )),
-                                          TextButton(
-                                              onPressed: () => {
-                                                    deleteServiceman(
-                                                        servicemanData, index),
-                                                    Navigator.pop(context),
-                                                  },
-                                              child: const Text(
-                                                "Yes",
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Color.fromARGB(
-                                                        255, 23, 59, 47)),
-                                              )),
-                                        ],
-                                      );
-                                    });
-                              },
-                              icon: const Icon(
-                                Icons.delete,
-                                color: GlobalVariables.unselectednavbarcolor,
-                              ))
-                        ],
-                      )
-                    ],
-                  );
-                }),
+                                          child: const Text(
+                                            "Yes",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600,
+                                                color: Color.fromARGB(
+                                                    255, 23, 59, 47)),
+                                          )),
+                                    ],
+                                  );
+                                });
+                          },
+                          icon: const Icon(
+                            Icons.delete,
+                            color: GlobalVariables.unselectednavbarcolor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            ),
             floatingActionButton: FloatingActionButton(
               foregroundColor: const Color.fromARGB(255, 49, 48, 48),
               backgroundColor: GlobalVariables.selectednavbarcolor,

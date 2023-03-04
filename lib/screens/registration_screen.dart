@@ -210,12 +210,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     },
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 10.h),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Checkbox(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: Checkbox(
                           checkColor: Colors.white,
                           activeColor: Color.fromARGB(255, 32, 131, 118),
                           value: isChecked,
@@ -224,36 +224,36 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               isChecked = newValue!;
                             });
                           }),
-                      GestureDetector(
-                        child: RichText(
-                          text: const TextSpan(children: [
-                            TextSpan(
-                                text: "I hereby agree to the ",
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 16, 94, 83),
-                                    fontSize: 15)),
-                            TextSpan(
-                                text: "Terms and Conditions",
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 32, 131, 118),
-                                    fontWeight: FontWeight.bold,
-                                    decoration: TextDecoration.underline,
-                                    decorationThickness: 2,
-                                    fontSize: 15)),
-                          ]),
-                        ),
-                        onTap: () => {
-                          //for terms and conditions page
-
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (context) => const BottomBar(),
-                          //     )),
-                        },
+                    ),
+                    GestureDetector(
+                      child: RichText(
+                        text: const TextSpan(children: [
+                          TextSpan(
+                              text: "I hereby agree to the ",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 16, 94, 83),
+                                  fontSize: 15)),
+                          TextSpan(
+                              text: "Terms and Conditions",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 32, 131, 118),
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline,
+                                  decorationThickness: 2,
+                                  fontSize: 15)),
+                        ]),
                       ),
-                    ],
-                  ),
+                      onTap: () => {
+                        //for terms and conditions page
+
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) => const BottomBar(),
+                        //     )),
+                      },
+                    ),
+                  ],
                 ),
                 CustomButton(
                     text: 'Register',

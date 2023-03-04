@@ -110,7 +110,7 @@ userRouter.post("/api/appointment", auth, async (req, res) => {
 
 userRouter.get("/api/my/appointments", auth, async (req, res) => {
   try {
-    const appointments = await Appointment.find({ user: req.user });
+    const appointments = await Appointment.find({ userId: req.user });
     res.json(appointments);
   } catch (e) {
     res.status(500).json({ error: e.message });

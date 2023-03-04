@@ -42,13 +42,13 @@ class AddressServices {
   }
 
   //book appointments
-  Future<void> bookAppointment({
-    required BuildContext context,
-    required String address,
-    required String appointDate,
-    required String appointTime,
-    required double totalAmount,
-  }) async {
+  Future<void> bookAppointment(
+      {required BuildContext context,
+      required String address,
+      required String appointDate,
+      required String appointTime,
+      required double totalAmount,
+      required}) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       http.Response res = await http.post(Uri.parse('$uri/api/appointment'),

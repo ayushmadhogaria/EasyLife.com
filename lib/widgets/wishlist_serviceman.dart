@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 
 class WishlistServiceman extends StatefulWidget {
   final int index;
-
   const WishlistServiceman({super.key, required this.index});
 
   @override
@@ -171,7 +170,56 @@ class _WishlistServicemanState extends State<WishlistServiceman> {
                 ),
                 child: Row(children: [
                   InkWell(
-                    onTap: () => decreaseDuration(serviceman),
+                    onTap: () {
+                      if (duration == 1) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                backgroundColor:
+                                    const Color.fromARGB(255, 233, 250, 244),
+                                title: const Text(
+                                  "Are you sure to remove this service from the wishlist?",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color.fromARGB(255, 23, 59, 47)),
+                                ),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text(
+                                        "No",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                            color: Color.fromARGB(
+                                                255, 23, 59, 47)),
+                                      )),
+                                  TextButton(
+                                      onPressed: () => {
+                                            decreaseDuration(serviceman),
+                                            Navigator.pop(context)
+                                          },
+                                      child: const Text(
+                                        "Yes",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                            color: Color.fromARGB(
+                                                255, 23, 59, 47)),
+                                      )),
+                                ],
+                              );
+                            });
+                      } else {
+                        decreaseDuration(serviceman);
+                      }
+                    },
                     child: Container(
                       width: 25,
                       height: 25,

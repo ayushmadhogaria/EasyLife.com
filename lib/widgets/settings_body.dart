@@ -1,16 +1,12 @@
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/screens/login_screen.dart';
+import 'package:easylifeapp/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SettingsBody extends StatefulWidget {
+class SettingsBody extends StatelessWidget {
   const SettingsBody({super.key});
 
-  @override
-  State<SettingsBody> createState() => _SettingsBodyState();
-}
-
-class _SettingsBodyState extends State<SettingsBody> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -179,8 +175,7 @@ class _SettingsBodyState extends State<SettingsBody> {
                                   )),
                               TextButton(
                                   onPressed: () => {
-                                        Navigator.pushNamed(
-                                            context, LoginScreen.routeName),
+                                        AuthService().logOut(context),
                                       },
                                   child: const Text(
                                     "Yes",
@@ -197,7 +192,7 @@ class _SettingsBodyState extends State<SettingsBody> {
                     Icons.logout,
                     size: 30,
                   ),
-                  iconColor: Color.fromARGB(255, 23, 59, 47),
+                  iconColor: Color.fromARGB(255, 26, 43, 37),
                   title: Wrap(
                     spacing: 70,
                     children: const [

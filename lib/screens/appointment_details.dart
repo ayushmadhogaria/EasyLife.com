@@ -1,7 +1,9 @@
+import 'package:easylifeapp/admin/services/admin_services.dart';
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/models/appointment.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
 import 'package:easylifeapp/screens/search_screen.dart';
+import 'package:easylifeapp/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -23,6 +25,7 @@ class AppointmentDetailScreen extends StatefulWidget {
 
 class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
   int currentStep = 0;
+  final AdminServices adminServices = AdminServices();
   void navigateToSearchScreen(String query) {
     if (query.isEmpty) return;
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
@@ -43,6 +46,21 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
   void initState() {
     super.initState();
     currentStep = widget.appointment.status;
+  }
+
+  //admin function for changing appointment status
+
+  void changeAppointmentStatus(int status) {
+    adminServices.changeAppointmentStatus(
+      context: context,
+      status: status + 1,
+      appointment: widget.appointment,
+      onSuccess: () {
+        setState(() {
+          currentStep += 1;
+        });
+      },
+    );
   }
 
   @override
@@ -71,68 +89,87 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                   Navigator.pop(context);
                 },
               ),
-              Expanded(
-                child: Container(
-                    height: 40,
-                    margin: const EdgeInsets.only(left: 10),
-                    child: Material(
-                      borderRadius: BorderRadius.circular(7),
-                      elevation: 1.5,
-                      child: TextFormField(
-                        controller: _searchController,
-                        cursorColor: GlobalVariables.unselectednavbarcolor,
-                        style: const TextStyle(
-                            color: GlobalVariables.unselectednavbarcolor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                        onFieldSubmitted: navigateToSearchScreen,
-                        decoration: InputDecoration(
-                            prefixIcon: InkWell(
-                              onTap: () {},
-                              child: const Padding(
-                                padding: EdgeInsets.only(left: 7),
-                                child: Icon(
-                                  Icons.search,
-                                  color: GlobalVariables.selectednavbarcolor,
-                                  size: 25,
+              Builder(builder: (context) {
+                if (user.type == 'Customer') {
+                  return Expanded(
+                    child: Container(
+                        height: 40,
+                        margin: const EdgeInsets.only(left: 10),
+                        child: Material(
+                          borderRadius: BorderRadius.circular(7),
+                          elevation: 1.5,
+                          child: TextFormField(
+                            controller: _searchController,
+                            cursorColor: GlobalVariables.unselectednavbarcolor,
+                            style: const TextStyle(
+                                color: GlobalVariables.unselectednavbarcolor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                            onFieldSubmitted: navigateToSearchScreen,
+                            decoration: InputDecoration(
+                                prefixIcon: InkWell(
+                                  onTap: () {},
+                                  child: const Padding(
+                                    padding: EdgeInsets.only(left: 7),
+                                    child: Icon(
+                                      Icons.search,
+                                      color:
+                                          GlobalVariables.selectednavbarcolor,
+                                      size: 25,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            filled: true,
-                            fillColor: const Color.fromARGB(255, 226, 253, 252),
-                            contentPadding: const EdgeInsets.only(top: 10),
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(7),
-                              ),
-                              borderSide: BorderSide.none,
-                            ),
-                            enabledBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(7),
-                              ),
-                              borderSide: BorderSide(
-                                  color: GlobalVariables.unselectednavbarcolor,
-                                  width: 1.3),
-                            ),
-                            hintText: 'Search for EasyLife.com services',
-                            hintStyle: const TextStyle(
-                                fontSize: 14,
-                                color: Color.fromARGB(255, 76, 102, 91),
-                                fontWeight: FontWeight.w400)),
-                      ),
-                    )),
-              ),
-              Container(
-                color: Colors.transparent,
-                height: 40,
-                margin: const EdgeInsets.symmetric(horizontal: 5),
-                child: const Icon(
-                  Icons.mic,
-                  color: Colors.white,
-                  size: 28,
-                ),
-              )
+                                filled: true,
+                                fillColor:
+                                    const Color.fromARGB(255, 226, 253, 252),
+                                contentPadding: const EdgeInsets.only(top: 10),
+                                border: const OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(7),
+                                  ),
+                                  borderSide: BorderSide.none,
+                                ),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(7),
+                                  ),
+                                  borderSide: BorderSide(
+                                      color:
+                                          GlobalVariables.unselectednavbarcolor,
+                                      width: 1.3),
+                                ),
+                                hintText: 'Search for EasyLife.com services',
+                                hintStyle: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color.fromARGB(255, 76, 102, 91),
+                                    fontWeight: FontWeight.w400)),
+                          ),
+                        )),
+                  );
+                } else {
+                  return const Text('Appointment Screen',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 16, 94, 83),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18));
+                }
+              }),
+              Builder(builder: (context) {
+                if (user.type == 'Customer') {
+                  return Container(
+                    color: Colors.transparent,
+                    height: 40,
+                    margin: const EdgeInsets.symmetric(horizontal: 5),
+                    child: const Icon(
+                      Icons.mic,
+                      color: Colors.white,
+                      size: 28,
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
+              })
             ],
           ),
         ),
@@ -163,41 +200,11 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Customer Name: ${user.name}',
+                      'Customer address:  ${widget.appointment.address}',
                       style: const TextStyle(
                           color: Color.fromARGB(255, 50, 77, 65),
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
-                    ),
-                    Text(
-                      'Customer Address: ${user.address}',
-                      style: const TextStyle(
-                          color: Color.fromARGB(255, 50, 77, 65),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15),
-                    ),
-                    GestureDetector(
-                      onTap: () => launch('tel:${user.phone}'),
-                      child: Row(
-                        children: [
-                          const Text(
-                            'Contact: ',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 50, 77, 65),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15),
-                          ),
-                          Text(
-                            user.phone,
-                            style: const TextStyle(
-                                decoration: TextDecoration.underline,
-                                decorationThickness: 2,
-                                color: Color.fromARGB(255, 50, 77, 65),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15),
-                          ),
-                        ],
-                      ),
                     ),
                   ],
                 ),
@@ -250,43 +257,6 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                           color: Color.fromARGB(255, 50, 77, 65),
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
-                    ),
-                    Text(
-                      'Customer Name: ${user.name}',
-                      style: const TextStyle(
-                          color: Color.fromARGB(255, 50, 77, 65),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15),
-                    ),
-                    Text(
-                      'Customer Address: ${user.address}',
-                      style: const TextStyle(
-                          color: Color.fromARGB(255, 50, 77, 65),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15),
-                    ),
-                    GestureDetector(
-                      onTap: () => launch('tel:${user.phone}'),
-                      child: Row(
-                        children: [
-                          const Text(
-                            'Contact: ',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 50, 77, 65),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15),
-                          ),
-                          Text(
-                            user.phone,
-                            style: const TextStyle(
-                                decoration: TextDecoration.underline,
-                                decorationThickness: 2,
-                                color: Color.fromARGB(255, 50, 77, 65),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15),
-                          ),
-                        ],
-                      ),
                     ),
                   ],
                 ),
@@ -403,11 +373,20 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                   data: ThemeData(
                       accentColor: Color.fromARGB(255, 85, 72, 52),
                       primarySwatch: Colors.blue,
-                      colorScheme: ColorScheme.light(
-                          primary: Color.fromARGB(255, 20, 34, 31))),
+                      colorScheme: const ColorScheme.light(
+                          primary: Color.fromARGB(255, 31, 58, 52))),
                   child: Stepper(
                     currentStep: currentStep,
                     controlsBuilder: ((context, details) {
+                      if (user.type == 'Admin') {
+                        return CustomButton(
+                            text: 'Done',
+                            onTap: () {
+                              if (currentStep <= 3) {
+                                changeAppointmentStatus(details.currentStep);
+                              }
+                            });
+                      }
                       return const SizedBox();
                     }),
                     physics: const ScrollPhysics(),

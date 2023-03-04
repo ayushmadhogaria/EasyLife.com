@@ -1,4 +1,6 @@
 import 'package:easylifeapp/admin/screens/all_service_screen.dart';
+import 'package:easylifeapp/admin/screens/analytics_screen.dart';
+import 'package:easylifeapp/admin/screens/appointment_screen.dart';
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,12 +19,8 @@ class _AdminScreenState extends State<AdminScreen> {
 
   List<Widget> pages = [
     const AllServiceManScreen(),
-    const Center(
-      child: Text("Analytics page"),
-    ),
-    const Center(
-      child: Text("All orders"),
-    ),
+    const AnalyticsScreen(),
+    const AppointmentsScreen(),
   ];
 
   void updatePage(int page) {
@@ -116,7 +114,7 @@ class _AdminScreenState extends State<AdminScreen> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _page == 3
+                    color: _page == 2
                         ? GlobalVariables.selectednavbarcolor
                         : GlobalVariables.backgroundcolor,
                     width: bottomBarborderWidth,
