@@ -1,8 +1,10 @@
 import 'package:easylifeapp/admin/services/admin_services.dart';
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/models/transaction.dart';
+import 'package:easylifeapp/widgets/category_earning_chart.dart';
 import 'package:easylifeapp/widgets/loader.dart';
 import 'package:flutter/material.dart';
+import 'package:charts_flutter_new/flutter.dart' as charts;
 
 class AnalyticsScreen extends StatefulWidget {
   const AnalyticsScreen({super.key});
@@ -33,21 +35,44 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   Widget build(BuildContext context) {
     return earnings == null || totalTransaction == null
         ? const Loader()
-        : Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Text(
-                    'Total Earning : \Rs.$totalTransaction',
-                    style: const TextStyle(
-                        color: GlobalVariables.unselectednavbarcolor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
+        : Scaffold(
+            backgroundColor: GlobalVariables.loggedinbackgroundcolor,
+            body: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Center(
+                    child: Text(
+                      'Total Earning : Rs.$totalTransaction',
+                      style: const TextStyle(
+                          color: GlobalVariables.unselectednavbarcolor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    ),
                   ),
                 ),
-              )
-            ],
+                const SizedBox(
+                  height: 50,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: 300,
+                    child: CategoryEarningChart(seriesList: [
+                      charts.Series(
+                          id: 'Transaction',
+                          colorFn: (_, __) =>
+                              charts.Color.fromHex(code: '#67a395'),
+                          data: earnings!,
+                          domainFn: (Transaction transation, _) =>
+                              transation.label,
+                          measureFn: (Transaction transation, _) =>
+                              transation.earning),
+                    ]),
+                  ),
+                )
+              ],
+            ),
           );
   }
 }

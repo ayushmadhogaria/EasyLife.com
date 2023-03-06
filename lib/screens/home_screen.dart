@@ -1,5 +1,4 @@
 import 'package:easylifeapp/constants/global_variables.dart';
-import 'package:easylifeapp/providers/user_provider.dart';
 import 'package:easylifeapp/screens/search_screen.dart';
 import 'package:easylifeapp/widgets/address_box.dart';
 import 'package:easylifeapp/widgets/carousal_slider.dart';
@@ -7,7 +6,6 @@ import 'package:easylifeapp/widgets/category_list.dart';
 import 'package:easylifeapp/widgets/recommeneded_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/home';
@@ -36,7 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
       backgroundColor: GlobalVariables.loggedinbackgroundcolor,
       appBar: PreferredSize(

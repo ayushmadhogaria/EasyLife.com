@@ -45,7 +45,7 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
   }
 
   void navigateToSearchScreen(String query) {
-    if (query.length < 1) return;
+    if (query.isEmpty) return;
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
 
     setState(() {
@@ -284,6 +284,7 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
                                   fontWeight: FontWeight.bold),
                             ),
                             onTap: () =>
+                                // ignore: deprecated_member_use
                                 launch('tel:${widget.serviceman.phone}'),
                           ),
                         ],
@@ -349,7 +350,7 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
                                   fontWeight: FontWeight.bold),
                               children: [
                                 TextSpan(
-                                  text: '\Rs. ${widget.serviceman.salary}',
+                                  text: 'Rs. ${widget.serviceman.salary}',
                                   style: const TextStyle(
                                       color: Color.fromARGB(255, 41, 68, 56),
                                       fontSize: 20,

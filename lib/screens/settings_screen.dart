@@ -1,6 +1,4 @@
 import 'package:easylifeapp/constants/global_variables.dart';
-import 'package:easylifeapp/screens/home_screen.dart';
-import 'package:easylifeapp/screens/registration_screen.dart';
 import 'package:easylifeapp/widgets/settings_body.dart';
 import 'package:easylifeapp/widgets/settings_information.dart';
 import 'package:easylifeapp/widgets/user_information.dart';

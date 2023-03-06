@@ -3,6 +3,7 @@ const servicemanRouter = express.Router();
 const auth = require("../middlewares/auth");
 const { ServiceMan } = require("../models/serviceman");
 
+//show all the serviceman
 servicemanRouter.get("/api/serviceman/", auth, async (req, res) => {
   try {
     const servicemen = await ServiceMan.find({ category: req.query.category });
@@ -13,7 +14,6 @@ servicemanRouter.get("/api/serviceman/", auth, async (req, res) => {
 });
 
 //search serviceman with the use of get request
-
 servicemanRouter.get("/api/serviceman/search/:name", auth, async (req, res) => {
   try {
     const servicemen = await ServiceMan.find({
@@ -51,6 +51,7 @@ servicemanRouter.post("/api/rate-serviceman", auth, async (req, res) => {
   }
 });
 
+//recommend the serviceman with highest rating
 servicemanRouter.get("/api/recommended-for-you", auth, async (req, res) => {
   try {
     let servicemen = await ServiceMan.find({});

@@ -218,7 +218,7 @@ class _AddServiceManScreenState extends State<AddServiceManScreen> {
                 padding: EdgeInsets.only(left: 10.h, right: 10.h),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.r),
-                    color: Color.fromARGB(255, 182, 223, 223),
+                    color: const Color.fromARGB(255, 182, 223, 223),
                     boxShadow: const [
                       BoxShadow(
                         offset: Offset(0, 10),
@@ -239,7 +239,7 @@ class _AddServiceManScreenState extends State<AddServiceManScreen> {
                         color: Color.fromARGB(255, 54, 83, 73),
                         fontWeight: FontWeight.bold,
                         fontSize: 16),
-                    cursorColor: Color.fromARGB(255, 54, 83, 73),
+                    cursorColor: const Color.fromARGB(255, 54, 83, 73),
                     decoration: const InputDecoration(
                         contentPadding: EdgeInsets.only(left: 5),
                         hintStyle: TextStyle(
@@ -375,7 +375,7 @@ class _AddServiceManScreenState extends State<AddServiceManScreen> {
                 padding: EdgeInsets.only(left: 10.h, right: 10.h),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.r),
-                    color: Color.fromARGB(255, 182, 223, 223),
+                    color: const Color.fromARGB(255, 182, 223, 223),
                     boxShadow: const [
                       BoxShadow(
                         offset: Offset(0, 10),
@@ -396,7 +396,7 @@ class _AddServiceManScreenState extends State<AddServiceManScreen> {
                         color: Color.fromARGB(255, 54, 83, 73),
                         fontWeight: FontWeight.bold,
                         fontSize: 16),
-                    cursorColor: Color.fromARGB(255, 54, 83, 73),
+                    cursorColor: const Color.fromARGB(255, 54, 83, 73),
                     decoration: const InputDecoration(
                         contentPadding: EdgeInsets.only(left: 5),
                         hintStyle: TextStyle(

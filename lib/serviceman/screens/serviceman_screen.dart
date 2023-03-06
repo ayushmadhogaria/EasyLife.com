@@ -1,5 +1,4 @@
 import 'package:easylifeapp/constants/global_variables.dart';
-import 'package:easylifeapp/widgets/app_bar_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -73,8 +72,8 @@ class _ServicemanScreenState extends State<ServicemanScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Color.fromARGB(255, 40, 119, 124),
-        unselectedItemColor: Color.fromARGB(255, 48, 145, 137),
+        selectedItemColor: const Color.fromARGB(255, 40, 119, 124),
+        unselectedItemColor: const Color.fromARGB(255, 48, 145, 137),
         backgroundColor: GlobalVariables.backgroundcolor,
         iconSize: 28,
         onTap: updatePage,

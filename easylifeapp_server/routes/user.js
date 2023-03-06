@@ -5,6 +5,7 @@ const Appointment = require("../models/appointment");
 const { ServiceMan } = require("../models/serviceman");
 const User = require("../models/user");
 
+//add product to the wishlist
 userRouter.post("/api/add-to-wishlist", auth, async (req, res) => {
   try {
     const { id } = req.body;
@@ -37,6 +38,7 @@ userRouter.post("/api/add-to-wishlist", auth, async (req, res) => {
   }
 });
 
+//remove product from wishlist
 userRouter.delete("/api/remove-from-wishlist/:id", auth, async (req, res) => {
   try {
     const { id } = req.params;

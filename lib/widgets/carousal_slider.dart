@@ -55,7 +55,7 @@ class _CarousalImageState extends State<CarousalImage> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: _current == index
-                    ? Color.fromARGB(255, 38, 100, 73)
+                    ? const Color.fromARGB(255, 38, 100, 73)
                     : GlobalVariables.selectednavbarcolor,
               ),
             );

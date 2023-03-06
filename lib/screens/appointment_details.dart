@@ -200,7 +200,21 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Customer address:  ${widget.appointment.address}',
+                      'Customer Name:  ${widget.appointment.address}',
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 50, 77, 65),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15),
+                    ),
+                    Text(
+                      'Contact details:  ${widget.appointment.address}',
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 50, 77, 65),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15),
+                    ),
+                    Text(
+                      'Customer Address:  ${widget.appointment.address}',
                       style: const TextStyle(
                           color: Color.fromARGB(255, 50, 77, 65),
                           fontWeight: FontWeight.bold,
@@ -312,6 +326,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                                 overflow: TextOverflow.ellipsis,
                               ),
                               GestureDetector(
+                                // ignore: deprecated_member_use
                                 onTap: () => launch(
                                     'tel:${widget.appointment.servicemans[i].phone}'),
                                 child: Row(
@@ -371,7 +386,8 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                 ),
                 child: Theme(
                   data: ThemeData(
-                      accentColor: Color.fromARGB(255, 85, 72, 52),
+                      // ignore: deprecated_member_use
+                      accentColor: const Color.fromARGB(255, 85, 72, 52),
                       primarySwatch: Colors.blue,
                       colorScheme: const ColorScheme.light(
                           primary: Color.fromARGB(255, 31, 58, 52))),
@@ -382,9 +398,9 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                         return CustomButton(
                             text: 'Done',
                             onTap: () {
-                              if (currentStep <= 3) {
-                                changeAppointmentStatus(details.currentStep);
-                              }
+                              // if (currentStep <= 3) {
+                              changeAppointmentStatus(details.currentStep);
+                              // }
                             });
                       }
                       return const SizedBox();
@@ -412,8 +428,8 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                         title: const Text('Declined'),
                         content:
                             const Text('Your appointment has been declined.'),
-                        isActive: currentStep > 1,
-                        state: currentStep > 1
+                        isActive: currentStep > 2,
+                        state: currentStep > 2
                             ? StepState.complete
                             : StepState.indexed,
                       ),
@@ -421,8 +437,8 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                         title: const Text('Ongoing'),
                         content: const Text(
                             'Your service is currently being carried out.'),
-                        isActive: currentStep > 2,
-                        state: currentStep > 2
+                        isActive: currentStep > 3,
+                        state: currentStep > 3
                             ? StepState.complete
                             : StepState.indexed,
                       ),
@@ -430,8 +446,8 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                         title: const Text('Completed'),
                         content:
                             const Text('Your appointment has been completed.'),
-                        isActive: currentStep > 3,
-                        state: currentStep >= 3
+                        isActive: currentStep >= 4,
+                        state: currentStep >= 4
                             ? StepState.complete
                             : StepState.indexed,
                       ),

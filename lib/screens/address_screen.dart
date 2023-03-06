@@ -25,6 +25,7 @@ class _AddressScreenState extends State<AddressScreen> {
   final TextEditingController districtController = TextEditingController();
   final _addressFormKey = GlobalKey<FormState>();
   String userAddress = "";
+
   DateTime? _date;
   TimeOfDay? _time;
 
@@ -90,6 +91,7 @@ class _AddressScreenState extends State<AddressScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: no_leading_underscores_for_local_identifiers
     _dateString() {
       if (_date == null) {
         return 'Date';
@@ -98,6 +100,7 @@ class _AddressScreenState extends State<AddressScreen> {
       }
     }
 
+    // ignore: no_leading_underscores_for_local_identifiers
     _timeString() {
       if (_time == null) {
         return 'Time slot';
@@ -107,6 +110,7 @@ class _AddressScreenState extends State<AddressScreen> {
     }
 
     var address = context.watch<UserProvider>().user.address;
+
     return Scaffold(
       backgroundColor: GlobalVariables.loggedinbackgroundcolor,
       appBar: PreferredSize(
@@ -168,6 +172,7 @@ class _AddressScreenState extends State<AddressScreen> {
                             ),
                             textButtonTheme: TextButtonThemeData(
                               style: TextButton.styleFrom(
+                                // ignore: deprecated_member_use
                                 primary: GlobalVariables
                                     .unselectednavbarcolor, // button text color
                               ),
@@ -234,7 +239,7 @@ class _AddressScreenState extends State<AddressScreen> {
                             ),
                             textButtonTheme: TextButtonThemeData(
                               style: TextButton.styleFrom(
-                                primary: GlobalVariables
+                                foregroundColor: GlobalVariables
                                     .unselectednavbarcolor, // button text color
                               ),
                             ),

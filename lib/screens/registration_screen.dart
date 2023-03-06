@@ -64,7 +64,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         child: Column(children: [
           Padding(
             padding: EdgeInsets.only(top: 50.h),
-            child: Container(
+            child: SizedBox(
               height: 70.h,
               child: Image.asset('assets/project_logo.png'),
             ),
@@ -217,7 +217,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       padding: const EdgeInsets.only(left: 20.0),
                       child: Checkbox(
                           checkColor: Colors.white,
-                          activeColor: Color.fromARGB(255, 32, 131, 118),
+                          activeColor: const Color.fromARGB(255, 32, 131, 118),
                           value: isChecked,
                           onChanged: (bool? newValue) {
                             setState(() {

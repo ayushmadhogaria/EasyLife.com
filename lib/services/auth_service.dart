@@ -53,7 +53,7 @@ class AuthService {
           );
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => LoginScreen()),
+            MaterialPageRoute(builder: (context) => const LoginScreen()),
           );
         },
       );
@@ -147,6 +147,7 @@ class AuthService {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       await sharedPreferences.setString('x-auth-token', '');
+      // ignore: use_build_context_synchronously
       Navigator.pushNamedAndRemoveUntil(
           context, LoginScreen.routeName, (route) => false);
     } catch (e) {

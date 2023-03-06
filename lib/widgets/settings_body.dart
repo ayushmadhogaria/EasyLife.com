@@ -29,7 +29,7 @@ class SettingsBody extends StatelessWidget {
                     Icons.book,
                     size: 30,
                   ),
-                  iconColor: Color.fromARGB(255, 23, 59, 47),
+                  iconColor: const Color.fromARGB(255, 23, 59, 47),
                   title: Wrap(
                     spacing: 160,
                     children: const [
@@ -56,7 +56,7 @@ class SettingsBody extends StatelessWidget {
                     Icons.favorite_border_outlined,
                     size: 30,
                   ),
-                  iconColor: Color.fromARGB(255, 23, 59, 47),
+                  iconColor: const Color.fromARGB(255, 23, 59, 47),
                   title: Wrap(
                     spacing: 120,
                     children: const [
@@ -80,7 +80,7 @@ class SettingsBody extends StatelessWidget {
                     Icons.headphones,
                     size: 30,
                   ),
-                  iconColor: Color.fromARGB(255, 23, 59, 47),
+                  iconColor: const Color.fromARGB(255, 23, 59, 47),
                   title: Wrap(
                     spacing: 70,
                     children: const [
@@ -104,7 +104,7 @@ class SettingsBody extends StatelessWidget {
                     Icons.details_outlined,
                     size: 30,
                   ),
-                  iconColor: Color.fromARGB(255, 23, 59, 47),
+                  iconColor: const Color.fromARGB(255, 23, 59, 47),
                   title: Wrap(
                     spacing: 70,
                     children: const [
@@ -128,7 +128,7 @@ class SettingsBody extends StatelessWidget {
                     Icons.info_rounded,
                     size: 30,
                   ),
-                  iconColor: Color.fromARGB(255, 23, 59, 47),
+                  iconColor: const Color.fromARGB(255, 23, 59, 47),
                   title: Wrap(
                     spacing: 70,
                     children: const [
@@ -192,7 +192,7 @@ class SettingsBody extends StatelessWidget {
                     Icons.logout,
                     size: 30,
                   ),
-                  iconColor: Color.fromARGB(255, 26, 43, 37),
+                  iconColor: const Color.fromARGB(255, 26, 43, 37),
                   title: Wrap(
                     spacing: 70,
                     children: const [
