@@ -119,4 +119,15 @@ userRouter.get("/api/my/appointments", auth, async (req, res) => {
   }
 });
 
+//delete the appointment
+userRouter.post("/api/delete-appointment", auth, async (req, res) => {
+  try {
+    const { id } = req.body;
+    let appointment = await Appointment.findByIdAndDelete(id);
+    res.json(appointment);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 module.exports = userRouter;

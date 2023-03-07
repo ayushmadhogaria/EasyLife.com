@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:easylifeapp/constants/error_handler.dart';
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/constants/utils.dart';
+import 'package:easylifeapp/models/appointment.dart';
 import 'package:easylifeapp/models/user.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -72,6 +73,38 @@ class AddressServices {
             wishlist: [],
           );
           userProvider.setUserFromModel(user);
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+//delete appointment
+  void deleteAppointment({
+    required BuildContext context,
+    required Appointment appointment,
+    required VoidCallback onSuccess,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response res = await http.post(
+        Uri.parse('$uri/api/delete-appointment'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode(
+          {
+            'id': appointment.id,
+          },
+        ),
+      );
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          onSuccess();
         },
       );
     } catch (e) {

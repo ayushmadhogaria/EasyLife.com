@@ -63,7 +63,7 @@ class AuthService {
   }
 
   //login user
-  void loginUser({
+  Future<void> loginUser({
     required BuildContext context,
     required String email,
     required String password,
@@ -102,7 +102,7 @@ class AuthService {
   }
 
   //getting user data
-  void getUserData(
+  Future<void> getUserData(
     BuildContext context,
   ) async {
     try {
@@ -142,7 +142,7 @@ class AuthService {
   }
 
   //logout user
-  void logOut(BuildContext context) async {
+  Future<void> logOut(BuildContext context) async {
     try {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();

@@ -3,6 +3,7 @@ import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/models/appointment.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
 import 'package:easylifeapp/screens/search_screen.dart';
+import 'package:easylifeapp/services/address_service.dart';
 import 'package:easylifeapp/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,6 +27,9 @@ class AppointmentDetailScreen extends StatefulWidget {
 class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
   int currentStep = 0;
   final AdminServices adminServices = AdminServices();
+  final AddressServices addressServices = AddressServices();
+  List<Appointment>? appointment;
+
   void navigateToSearchScreen(String query) {
     if (query.isEmpty) return;
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
@@ -49,7 +53,6 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
   }
 
   //admin function for changing appointment status
-
   void changeAppointmentStatus(int status) {
     adminServices.changeAppointmentStatus(
       context: context,
@@ -61,6 +64,17 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
         });
       },
     );
+  }
+
+  //delete the appointment
+  void deleteAppointment(Appointment app, int index) {
+    addressServices.deleteAppointment(
+        context: context,
+        appointment: app,
+        onSuccess: () {
+          appointment!.removeAt(index);
+          setState(() {});
+        });
   }
 
   @override
@@ -180,11 +194,67 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('View appointment details',
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 16, 94, 83),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18)),
+              Row(
+                children: [
+                  const Text('View appointment details',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 16, 94, 83),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18)),
+                  IconButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 233, 250, 244),
+                              title: const Text(
+                                "Are you sure to delete this appointment?",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color.fromARGB(255, 23, 59, 47)),
+                              ),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text(
+                                      "No",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color:
+                                              Color.fromARGB(255, 23, 59, 47)),
+                                    )),
+                                TextButton(
+                                    onPressed: () => {
+                                          deleteAppointment,
+                                          Navigator.pop(context),
+                                        },
+                                    child: const Text(
+                                      "Yes",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color:
+                                              Color.fromARGB(255, 23, 59, 47)),
+                                    )),
+                              ],
+                            );
+                          });
+                    },
+                    icon: const Icon(
+                      Icons.delete,
+                      color: GlobalVariables.unselectednavbarcolor,
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -377,6 +447,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
               const SizedBox(
                 height: 10,
               ),
+              // DropdownButton(items: items, onChanged: onChanged)
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
@@ -384,6 +455,15 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                     color: GlobalVariables.unselectednavbarcolor,
                   ),
                 ),
+                // child: Text(widget.appointment.status == 1
+                //     ? "Pending"
+                //     : widget.appointment.status == 2
+                //         ? "Accepted"
+                //         : widget.appointment.status == 3
+                //             ? "Declined"
+                //             : widget.appointment.status == 4
+                //                 ? "Ongoing"
+                //                 : "Completed"),
                 child: Theme(
                   data: ThemeData(
                       // ignore: deprecated_member_use
@@ -398,9 +478,11 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                         return CustomButton(
                             text: 'Done',
                             onTap: () {
-                              // if (currentStep <= 3) {
-                              changeAppointmentStatus(details.currentStep);
-                              // }
+                              if (currentStep <= 3) {
+                                changeAppointmentStatus(details.currentStep);
+                              } else {
+                                print('Task completed');
+                              }
                             });
                       }
                       return const SizedBox();
@@ -415,6 +497,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                             ? StepState.complete
                             : StepState.indexed,
                       ),
+                      // if (currentStep != 2)
                       Step(
                         title: const Text('Accepted'),
                         content:

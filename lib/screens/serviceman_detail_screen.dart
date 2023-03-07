@@ -391,7 +391,9 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                // Navigator.pushNamed(context, BottomBar.routeName);
+              },
               child: Container(
                 margin: EdgeInsets.only(right: 40.h, left: 40.h, top: 20.h),
                 alignment: Alignment.center,

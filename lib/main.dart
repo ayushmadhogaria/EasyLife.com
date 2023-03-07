@@ -26,6 +26,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final AuthService authService = AuthService();
+
   @override
   void initState() {
     super.initState();
@@ -40,16 +41,17 @@ class _MyAppState extends State<MyApp> {
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'EasyLife.com',
-            onGenerateRoute: (settings) => generateRoute(settings),
-            home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-                ? Provider.of<UserProvider>(context).user.type == 'Customer'
-                    ? const BottomBar()
-                    : Provider.of<UserProvider>(context).user.type == 'Admin'
-                        ? const AdminScreen()
-                        : const ServicemanScreen()
-                : const SplashScreen());
+          debugShowCheckedModeBanner: false,
+          title: 'EasyLife.com',
+          onGenerateRoute: (settings) => generateRoute(settings),
+          home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+              ? Provider.of<UserProvider>(context).user.type == 'Customer'
+                  ? const BottomBar()
+                  : Provider.of<UserProvider>(context).user.type == 'Admin'
+                      ? const AdminScreen()
+                      : const ServicemanScreen()
+              : const SplashScreen(),
+        );
       },
     );
   }
