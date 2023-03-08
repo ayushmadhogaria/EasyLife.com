@@ -46,6 +46,7 @@ class AddressServices {
   Future<void> bookAppointment(
       {required BuildContext context,
       required String address,
+      required String userName,
       required String appointDate,
       required String appointTime,
       required double totalAmount,
@@ -60,6 +61,7 @@ class AddressServices {
           body: jsonEncode({
             'wishlist': userProvider.user.wishlist,
             'address': address,
+            'userName': userProvider.user.name,
             'totalAmount': totalAmount,
             'appointDate': appointDate,
             'appointTime': appointTime,
@@ -71,6 +73,7 @@ class AddressServices {
           showSnackBar(context, 'Your appointment have been confirmed!');
           User user = userProvider.user.copyWith(
             wishlist: [],
+            name: jsonDecode(res.body)['userName'],
           );
           userProvider.setUserFromModel(user);
         },

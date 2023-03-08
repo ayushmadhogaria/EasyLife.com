@@ -2,17 +2,7 @@ import 'package:easylifeapp/models/user.dart';
 import 'package:flutter/material.dart';
 
 class UserProvider extends ChangeNotifier {
-  User _user = User(
-    id: '',
-    name: '',
-    email: '',
-    password: '',
-    type: '',
-    phone: '',
-    address: '',
-    token: '',
-    wishlist: [],
-  );
+  User _user = User.empty();
 
   User get user => _user;
 
@@ -23,6 +13,11 @@ class UserProvider extends ChangeNotifier {
 
   void setUserFromModel(User user) {
     _user = user;
+    notifyListeners();
+  }
+
+  void logout() {
+    _user = User.empty();
     notifyListeners();
   }
 }

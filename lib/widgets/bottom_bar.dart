@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart' as badges;
+import 'package:easylifeapp/providers/navigation_provider.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
 import 'package:easylifeapp/screens/account_screen.dart';
 import 'package:easylifeapp/screens/home_screen.dart';
@@ -18,7 +19,6 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
-  int _page = 0;
   double bottomNavBarWidth = 42;
   double bottomBarborderWidth = 5;
 
@@ -29,14 +29,15 @@ class _BottomBarState extends State<BottomBar> {
     const SettingsScreen(),
   ];
 
-  void updatePage(int page) {
-    setState(() {
-      _page = page;
-    });
-  }
+  // void updatePage(int page) {
+  //   setState(() {
+  //     _page = page;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final _page = Provider.of<NavigationProvider>(context).selectedIndex;
     final userWishlistLen = context.watch<UserProvider>().user.wishlist;
     return Scaffold(
       body: pages[_page],
@@ -47,7 +48,9 @@ class _BottomBarState extends State<BottomBar> {
         unselectedItemColor: const Color.fromARGB(255, 48, 145, 137),
         backgroundColor: GlobalVariables.backgroundcolor,
         iconSize: 28,
-        onTap: updatePage,
+        onTap: (index) {
+          context.read<NavigationProvider>().selectedIndex = index;
+        },
         items: [
           BottomNavigationBarItem(
               icon: Container(

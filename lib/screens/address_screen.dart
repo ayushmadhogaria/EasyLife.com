@@ -1,8 +1,10 @@
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/constants/utils.dart';
+import 'package:easylifeapp/providers/navigation_provider.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
 import 'package:easylifeapp/services/address_service.dart';
 import 'package:easylifeapp/widgets/appointment_textfield.dart';
+import 'package:easylifeapp/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -63,6 +65,7 @@ class _AddressScreenState extends State<AddressScreen> {
     await addressServices.bookAppointment(
         context: context,
         address: userAddress,
+        userName: userAddress,
         appointDate: DateFormat.yMMMEd().format(_date!),
         appointTime: _time.toString(),
         totalAmount: double.parse(widget.totalAmount));
@@ -497,9 +500,11 @@ class _AddressScreenState extends State<AddressScreen> {
                                     TextButton(
                                         onPressed: () {
                                           onPayResult();
-                                          Navigator.pop(context);
-                                          // Navigator.pushNamed(
-                                          //     context, AddressScreen.routeName);
+                                          context
+                                              .read<NavigationProvider>()
+                                              .selectedIndex = 2;
+                                          Navigator.pushNamed(
+                                              context, BottomBar.routeName);
                                         },
                                         child: const Text(
                                           "Confirm",

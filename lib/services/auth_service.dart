@@ -1,8 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
+import 'package:easylifeapp/admin/screens/admin_screen.dart';
 import 'package:easylifeapp/constants/error_handler.dart';
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/constants/utils.dart';
 import 'package:easylifeapp/models/user.dart';
+import 'package:easylifeapp/providers/navigation_provider.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
 import 'package:easylifeapp/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -84,15 +88,24 @@ class AuthService {
         context: context,
         onSuccess: () async {
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          // ignore: use_build_context_synchronously
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
-          // ignore: use_build_context_synchronously
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            BottomBar.routeName,
-            (route) => false,
-          );
+
+          final user = context.read<UserProvider>().user;
+
+          if (user.type.toLowerCase() == 'admin') {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => AdminScreen()),
+                (route) => false);
+          } else {
+            context.read<NavigationProvider>().selectedIndex = 0;
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              BottomBar.routeName,
+              (route) => false,
+            );
+          }
         },
         //onSuccess: () {},
       );
@@ -146,10 +159,9 @@ class AuthService {
     try {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
-      await sharedPreferences.setString('x-auth-token', '');
+      await sharedPreferences.remove('x-auth-token');
       // ignore: use_build_context_synchronously
-      Navigator.pushNamedAndRemoveUntil(
-          context, LoginScreen.routeName, (route) => false);
+      return;
     } catch (e) {
       showSnackBar(context, e.toString());
     }

@@ -1,8 +1,10 @@
 import 'package:easylifeapp/constants/global_variables.dart';
+import 'package:easylifeapp/providers/user_provider.dart';
 import 'package:easylifeapp/screens/login_screen.dart';
 import 'package:easylifeapp/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class SettingsBody extends StatelessWidget {
   const SettingsBody({super.key});
@@ -174,9 +176,14 @@ class SettingsBody extends StatelessWidget {
                                         color: Color.fromARGB(255, 23, 59, 47)),
                                   )),
                               TextButton(
-                                  onPressed: () => {
-                                        AuthService().logOut(context),
-                                      },
+                                  onPressed: () async {
+                                    await AuthService().logOut(context);
+                                    context.read<UserProvider>().logout();
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        LoginScreen.routeName,
+                                        (route) => false);
+                                  },
                                   child: const Text(
                                     "Yes",
                                     style: TextStyle(

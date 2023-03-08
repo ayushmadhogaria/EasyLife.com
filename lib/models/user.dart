@@ -23,6 +23,24 @@ class User {
     required this.wishlist,
   });
 
+  static User empty() {
+    return User(
+      id: '',
+      name: '',
+      email: '',
+      password: '',
+      type: '',
+      phone: '',
+      address: '',
+      token: '',
+      wishlist: [],
+    );
+  }
+
+  bool isAdmin() {
+    return type.toLowerCase() == 'admin';
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,

@@ -98,6 +98,7 @@ userRouter.post("/api/appointment", auth, async (req, res) => {
       address,
       appointDate,
       appointTime,
+      userName,
       userId: req.user,
       requestedAt: new Date().getTime(),
     });

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-String uri = 'http://192.168.1.68:3000';
+String uri = 'http://192.168.1.121:3000';
 
 class GlobalVariables {
   static const backgroundcolor = Color.fromARGB(255, 217, 254, 241);
@@ -29,7 +29,7 @@ class GlobalVariables {
     {
       'title': 'Driver',
       'image': 'assets/driver.png',
-    }, 
+    },
     {
       'title': 'Cook',
       'image': 'assets/cook.png',

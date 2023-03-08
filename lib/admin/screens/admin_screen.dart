@@ -1,10 +1,16 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:easylifeapp/admin/screens/all_service_screen.dart';
 import 'package:easylifeapp/admin/screens/analytics_screen.dart';
 import 'package:easylifeapp/admin/screens/appointment_screen.dart';
 import 'package:easylifeapp/constants/global_variables.dart';
+import 'package:easylifeapp/providers/user_provider.dart';
 import 'package:easylifeapp/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+
+import '../../screens/login_screen.dart';
 
 class AdminScreen extends StatefulWidget {
   const AdminScreen({super.key});
@@ -89,9 +95,12 @@ class _AdminScreenState extends State<AdminScreen> {
                                       color: Color.fromARGB(255, 23, 59, 47)),
                                 )),
                             TextButton(
-                                onPressed: () => {
-                                      AuthService().logOut(context),
-                                    },
+                                onPressed: () async {
+                                  await AuthService().logOut(context);
+                                  context.read<UserProvider>().logout();
+                                  Navigator.pushNamedAndRemoveUntil(context,
+                                      LoginScreen.routeName, (route) => false);
+                                },
                                 child: const Text(
                                   "Yes",
                                   style: TextStyle(

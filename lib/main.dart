@@ -1,4 +1,5 @@
 import 'package:easylifeapp/admin/screens/admin_screen.dart';
+import 'package:easylifeapp/providers/navigation_provider.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
 import 'package:easylifeapp/router.dart';
 import 'package:easylifeapp/screens/splash_screen.dart';
@@ -13,6 +14,9 @@ void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
       create: (context) => UserProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => NavigationProvider(),
     ),
   ], child: const MyApp()));
 }

@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/models/serviceman.dart';
+import 'package:easylifeapp/providers/navigation_provider.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
+import 'package:easylifeapp/screens/home_screen.dart';
 import 'package:easylifeapp/screens/search_screen.dart';
 import 'package:easylifeapp/services/serviceman_details_services.dart';
 import 'package:easylifeapp/widgets/bottom_bar.dart';
@@ -392,7 +394,10 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
             ),
             GestureDetector(
               onTap: () {
-                // Navigator.pushNamed(context, BottomBar.routeName);
+                servicemanDetailsServices.addToWishlist(
+                    context: context, serviceman: widget.serviceman);
+                context.read<NavigationProvider>().selectedIndex = 2;
+                Navigator.pushNamed(context, BottomBar.routeName);
               },
               child: Container(
                 margin: EdgeInsets.only(right: 40.h, left: 40.h, top: 20.h),
