@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 class ServicemanDetailsServices {
+  //add to wishlist
   void addToWishlist({
     required BuildContext context,
     required Serviceman serviceman,
@@ -40,6 +41,7 @@ class ServicemanDetailsServices {
     }
   }
 
+//rating serviceman
   void rateServiceman({
     required BuildContext context,
     required Serviceman serviceman,

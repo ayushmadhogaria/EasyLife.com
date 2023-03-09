@@ -3,7 +3,6 @@ import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/models/serviceman.dart';
 import 'package:easylifeapp/providers/navigation_provider.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
-import 'package:easylifeapp/screens/home_screen.dart';
 import 'package:easylifeapp/screens/search_screen.dart';
 import 'package:easylifeapp/services/serviceman_details_services.dart';
 import 'package:easylifeapp/widgets/bottom_bar.dart';
@@ -28,6 +27,7 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
       ServicemanDetailsServices();
   double avgRating = 0;
   double myRating = 0;
+  bool isChecked = false;
 
   @override
   void initState() {
@@ -71,6 +71,7 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
       backgroundColor: GlobalVariables.loggedinbackgroundcolor,
       appBar: PreferredSize(
@@ -94,68 +95,87 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
                   Navigator.pop(context);
                 },
               ),
-              Expanded(
-                child: Container(
-                    height: 40,
-                    margin: const EdgeInsets.only(left: 10),
-                    child: Material(
-                      borderRadius: BorderRadius.circular(7),
-                      elevation: 1.5,
-                      child: TextFormField(
-                        controller: _searchController,
-                        cursorColor: GlobalVariables.unselectednavbarcolor,
-                        style: const TextStyle(
-                            color: GlobalVariables.unselectednavbarcolor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                        onFieldSubmitted: navigateToSearchScreen,
-                        decoration: InputDecoration(
-                            prefixIcon: InkWell(
-                              onTap: () {},
-                              child: const Padding(
-                                padding: EdgeInsets.only(left: 7),
-                                child: Icon(
-                                  Icons.search,
-                                  color: GlobalVariables.selectednavbarcolor,
-                                  size: 25,
+              Builder(builder: (context) {
+                if (user.type == 'Customer') {
+                  return Expanded(
+                    child: Container(
+                        height: 40,
+                        margin: const EdgeInsets.only(left: 10),
+                        child: Material(
+                          borderRadius: BorderRadius.circular(7),
+                          elevation: 1.5,
+                          child: TextFormField(
+                            controller: _searchController,
+                            cursorColor: GlobalVariables.unselectednavbarcolor,
+                            style: const TextStyle(
+                                color: GlobalVariables.unselectednavbarcolor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                            onFieldSubmitted: navigateToSearchScreen,
+                            decoration: InputDecoration(
+                                prefixIcon: InkWell(
+                                  onTap: () {},
+                                  child: const Padding(
+                                    padding: EdgeInsets.only(left: 7),
+                                    child: Icon(
+                                      Icons.search,
+                                      color:
+                                          GlobalVariables.selectednavbarcolor,
+                                      size: 25,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            filled: true,
-                            fillColor: const Color.fromARGB(255, 226, 253, 252),
-                            contentPadding: const EdgeInsets.only(top: 10),
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(7),
-                              ),
-                              borderSide: BorderSide.none,
-                            ),
-                            enabledBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(7),
-                              ),
-                              borderSide: BorderSide(
-                                  color: GlobalVariables.unselectednavbarcolor,
-                                  width: 1.3),
-                            ),
-                            hintText: 'Search for EasyLife.com services',
-                            hintStyle: const TextStyle(
-                                fontSize: 14,
-                                color: Color.fromARGB(255, 76, 102, 91),
-                                fontWeight: FontWeight.w400)),
-                      ),
-                    )),
-              ),
-              Container(
-                color: Colors.transparent,
-                height: 40,
-                margin: const EdgeInsets.symmetric(horizontal: 5),
-                child: const Icon(
-                  Icons.mic,
-                  color: Colors.white,
-                  size: 28,
-                ),
-              )
+                                filled: true,
+                                fillColor:
+                                    const Color.fromARGB(255, 226, 253, 252),
+                                contentPadding: const EdgeInsets.only(top: 10),
+                                border: const OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(7),
+                                  ),
+                                  borderSide: BorderSide.none,
+                                ),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(7),
+                                  ),
+                                  borderSide: BorderSide(
+                                      color:
+                                          GlobalVariables.unselectednavbarcolor,
+                                      width: 1.3),
+                                ),
+                                hintText: 'Search for EasyLife.com services',
+                                hintStyle: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color.fromARGB(255, 76, 102, 91),
+                                    fontWeight: FontWeight.w400)),
+                          ),
+                        )),
+                  );
+                } else {
+                  return const Text('Serviceman Detail Screen',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 16, 94, 83),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18));
+                }
+              }),
+              Builder(builder: (context) {
+                if (user.type == 'Customer') {
+                  return Container(
+                    color: Colors.transparent,
+                    height: 40,
+                    margin: const EdgeInsets.symmetric(horizontal: 5),
+                    child: const Icon(
+                      Icons.mic,
+                      color: Colors.white,
+                      size: 28,
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
+              })
             ],
           ),
         ),
@@ -219,7 +239,7 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
                         fontWeight: FontWeight.bold),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 240.0),
+                    padding: const EdgeInsets.only(left: 100.0),
                     child: RatingStars(
                       rating: avgRating,
                     ),
@@ -392,65 +412,88 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
                 color: Colors.black12,
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                servicemanDetailsServices.addToWishlist(
-                    context: context, serviceman: widget.serviceman);
-                context.read<NavigationProvider>().selectedIndex = 2;
-                Navigator.pushNamed(context, BottomBar.routeName);
-              },
-              child: Container(
-                margin: EdgeInsets.only(right: 40.h, left: 40.h, top: 20.h),
-                alignment: Alignment.center,
-                height: 50,
-                decoration: BoxDecoration(
-                    gradient: const LinearGradient(colors: [
-                      Color.fromARGB(255, 166, 201, 197),
-                      Color.fromARGB(255, 115, 155, 153)
-                    ], begin: Alignment.centerLeft, end: Alignment.centerRight),
-                    borderRadius: BorderRadius.circular(50),
-                    boxShadow: const [
-                      BoxShadow(
-                          offset: Offset(0, 10),
-                          blurRadius: 50,
-                          color: Color(0xffEEEEEE))
-                    ]),
-                child: const Text(
-                  "Book An Appointment",
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 30, 70, 60),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: addToWishlist,
-              child: Container(
-                margin: EdgeInsets.only(right: 40.h, left: 40.h, top: 10.h),
-                alignment: Alignment.center,
-                height: 50,
-                decoration: BoxDecoration(
-                    gradient: const LinearGradient(colors: [
-                      Color.fromARGB(255, 166, 201, 197),
-                      Color.fromARGB(255, 115, 155, 153)
-                    ], begin: Alignment.centerLeft, end: Alignment.centerRight),
-                    borderRadius: BorderRadius.circular(50),
-                    boxShadow: const [
-                      BoxShadow(
-                          offset: Offset(0, 10),
-                          blurRadius: 50,
-                          color: Color(0xffEEEEEE))
-                    ]),
-                child: const Text(
-                  "Add to Wishlist",
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 30, 70, 60),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17),
-                ),
-              ),
-            ),
+            Builder(builder: (context) {
+              if (user.type == 'Customer') {
+                return GestureDetector(
+                  onTap: () {
+                    servicemanDetailsServices.addToWishlist(
+                        context: context, serviceman: widget.serviceman);
+                    context.read<NavigationProvider>().selectedIndex = 2;
+                    Navigator.pushNamed(context, BottomBar.routeName);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(right: 40.h, left: 40.h, top: 20.h),
+                    alignment: Alignment.center,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                            colors: [
+                              Color.fromARGB(255, 166, 201, 197),
+                              Color.fromARGB(255, 115, 155, 153)
+                            ],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight),
+                        borderRadius: BorderRadius.circular(50),
+                        boxShadow: const [
+                          BoxShadow(
+                              offset: Offset(0, 10),
+                              blurRadius: 50,
+                              color: Color(0xffEEEEEE))
+                        ]),
+                    child: const Text(
+                      "Book An Appointment",
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 30, 70, 60),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17),
+                    ),
+                  ),
+                );
+              } else {
+                return const SizedBox(
+                  height: 0,
+                );
+              }
+            }),
+            Builder(builder: (context) {
+              if (user.type == 'Customer') {
+                return GestureDetector(
+                  onTap: addToWishlist,
+                  child: Container(
+                    margin: EdgeInsets.only(right: 40.h, left: 40.h, top: 10.h),
+                    alignment: Alignment.center,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                            colors: [
+                              Color.fromARGB(255, 166, 201, 197),
+                              Color.fromARGB(255, 115, 155, 153)
+                            ],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight),
+                        borderRadius: BorderRadius.circular(50),
+                        boxShadow: const [
+                          BoxShadow(
+                              offset: Offset(0, 10),
+                              blurRadius: 50,
+                              color: Color(0xffEEEEEE))
+                        ]),
+                    child: const Text(
+                      "Add to Wishlist",
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 30, 70, 60),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17),
+                    ),
+                  ),
+                );
+              } else {
+                return const SizedBox(
+                  height: 0,
+                );
+              }
+              ;
+            }),
             Padding(
               padding: const EdgeInsets.only(top: 12.0),
               child: Container(

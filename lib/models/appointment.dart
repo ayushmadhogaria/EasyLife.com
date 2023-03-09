@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:easylifeapp/models/serviceman.dart';
 
 class Appointment {
@@ -8,19 +7,18 @@ class Appointment {
   final List<int> duration;
   final String address;
   final String userId;
-  final String userName;
   final String appointDate;
   final String appointTime;
   final int requestedAt;
   final int status;
   final double totalAmount;
+
   Appointment({
     required this.id,
     required this.servicemans,
     required this.duration,
     required this.address,
     required this.userId,
-    required this.userName,
     required this.requestedAt,
     required this.appointDate,
     required this.appointTime,
@@ -35,7 +33,6 @@ class Appointment {
       'duration': duration,
       'address': address,
       'userId': userId,
-      'userName': userName,
       'requestedAt': requestedAt,
       'status': status,
       'appointDate': appointDate,
@@ -58,7 +55,6 @@ class Appointment {
       appointDate: map['appointDate'] ?? '',
       appointTime: map['appointTime'] ?? '',
       userId: map['userId'] ?? '',
-      userName: map['userName'] ?? '',
       requestedAt: map['requestedAt']?.toInt() ?? 0,
       status: map['status']?.toInt() ?? 0,
       totalAmount: map['totalAmount']?.toDouble() ?? 0.0,

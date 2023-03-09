@@ -2,6 +2,7 @@ import 'package:easylifeapp/admin/screens/add_serviceman_screen.dart';
 import 'package:easylifeapp/admin/services/admin_services.dart';
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/models/serviceman.dart';
+import 'package:easylifeapp/screens/serviceman_detail_screen.dart';
 import 'package:easylifeapp/widgets/individual_booking.dart';
 import 'package:easylifeapp/widgets/loader.dart';
 import 'package:flutter/material.dart';
@@ -56,13 +57,13 @@ class _AllServiceManScreenState extends State<AllServiceManScreen> {
               itemBuilder: (context, index) {
                 final servicemanData = serviceman![index];
                 return GestureDetector(
-                  // onTap: () {
-                  //   Navigator.pushNamed(
-                  //     context,
-                  //     ServicemanDetailScreen.routeName,
-                  //     arguments: serviceman,
-                  //   );
-                  // }
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      ServicemanDetailScreen.routeName,
+                      arguments: servicemanData,
+                    );
+                  },
                   child: Column(
                     children: [
                       Text(

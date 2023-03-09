@@ -27,7 +27,6 @@ class _AddressScreenState extends State<AddressScreen> {
   final TextEditingController districtController = TextEditingController();
   final _addressFormKey = GlobalKey<FormState>();
   String userAddress = "";
-
   DateTime? _date;
   TimeOfDay? _time;
 
@@ -65,7 +64,6 @@ class _AddressScreenState extends State<AddressScreen> {
     await addressServices.bookAppointment(
         context: context,
         address: userAddress,
-        userName: userAddress,
         appointDate: DateFormat.yMMMEd().format(_date!),
         appointTime: _time.toString(),
         totalAmount: double.parse(widget.totalAmount));

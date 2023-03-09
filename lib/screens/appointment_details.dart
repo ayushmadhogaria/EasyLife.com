@@ -238,12 +238,13 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Appointment Placed At:  ${DateFormat().format(DateTime.fromMillisecondsSinceEpoch(widget.appointment.requestedAt))}',
+                      'Appointment Placed At: ${DateFormat().format(DateTime.fromMillisecondsSinceEpoch(widget.appointment.requestedAt))}',
                       style: const TextStyle(
                           color: Color.fromARGB(255, 50, 77, 65),
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
                     ),
+                    Text(''),
                     Text(
                       'Appointment ID:  ${widget.appointment.id}',
                       style: const TextStyle(
@@ -251,6 +252,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
                     ),
+                    Text(''),
                     Text(
                       'Service Total: Rs.${widget.appointment.totalAmount} ',
                       style: const TextStyle(
@@ -258,6 +260,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
                     ),
+                    Text(''),
                     Text(
                       'Appointment Date: ${widget.appointment.appointDate}',
                       style: const TextStyle(
@@ -265,6 +268,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
                     ),
+                    Text(''),
                     Text(
                       'Appointment Time: ${widget.appointment.appointTime}',
                       style: const TextStyle(
@@ -427,7 +431,6 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                             ? StepState.complete
                             : StepState.indexed,
                       ),
-                      // if (currentStep != 2)
                       Step(
                         title: const Text('Accepted'),
                         content:

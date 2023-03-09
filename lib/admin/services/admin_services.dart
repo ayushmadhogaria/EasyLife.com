@@ -103,6 +103,7 @@ class AdminServices {
     return servicemanList;
   }
 
+//delete serviceman
   void deleteServiceman(
       {required BuildContext context,
       required Serviceman serviceman,

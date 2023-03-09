@@ -136,12 +136,13 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                       itemBuilder: ((context, index) {
                         final serviceman = servicemanList![index];
                         return GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
+                          onTap: () async {
+                            await Navigator.pushNamed(
                               context,
                               ServicemanDetailScreen.routeName,
                               arguments: serviceman,
                             );
+                            fetchCategoryServiceman();
                           },
                           child: Column(
                             children: [
