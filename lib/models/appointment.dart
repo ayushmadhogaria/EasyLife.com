@@ -5,6 +5,8 @@ class Appointment {
   final String id;
   final List<Serviceman> servicemans;
   final List<int> duration;
+  final String userName;
+  final String userContact;
   final String address;
   final String userId;
   final String appointDate;
@@ -16,6 +18,8 @@ class Appointment {
   Appointment({
     required this.id,
     required this.servicemans,
+    required this.userName,
+    required this.userContact,
     required this.duration,
     required this.address,
     required this.userId,
@@ -31,6 +35,8 @@ class Appointment {
       'id': id,
       'servicemans': servicemans.map((x) => x.toMap()).toList(),
       'duration': duration,
+      'userName': userName,
+      'userContact': userContact,
       'address': address,
       'userId': userId,
       'requestedAt': requestedAt,
@@ -52,6 +58,8 @@ class Appointment {
         ),
       ),
       address: map['address'] ?? '',
+      userName: map['userName'] ?? '',
+      userContact: map['userContact'] ?? '',
       appointDate: map['appointDate'] ?? '',
       appointTime: map['appointTime'] ?? '',
       userId: map['userId'] ?? '',

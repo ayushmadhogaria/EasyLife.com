@@ -77,8 +77,15 @@ userRouter.post("/api/save-user-address", auth, async (req, res) => {
 //booking appointment
 userRouter.post("/api/appointment", auth, async (req, res) => {
   try {
-    const { wishlist, totalAmount, address, appointDate, appointTime } =
-      req.body;
+    const {
+      wishlist,
+      userName,
+      userContact,
+      totalAmount,
+      address,
+      appointDate,
+      appointTime,
+    } = req.body;
 
     let servicemans = [];
 
@@ -95,10 +102,13 @@ userRouter.post("/api/appointment", auth, async (req, res) => {
     let appointment = new Appointment({
       servicemans,
       totalAmount,
+      userName,
+      userContact,
       address,
       appointDate,
       appointTime,
       userId: req.user,
+      // user: user,
       requestedAt: new Date().getTime(),
     });
     appointment = await appointment.save();

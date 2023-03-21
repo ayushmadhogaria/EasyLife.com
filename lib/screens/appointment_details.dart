@@ -200,18 +200,35 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Customer Name:  ${widget.appointment.address}',
+                      'Customer Name:  ${widget.appointment.userName}',
                       style: const TextStyle(
                           color: Color.fromARGB(255, 50, 77, 65),
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
                     ),
-                    Text(
-                      'Contact details:  ${widget.appointment.address}',
-                      style: const TextStyle(
-                          color: Color.fromARGB(255, 50, 77, 65),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15),
+                    GestureDetector(
+                      child: RichText(
+                        text: TextSpan(children: [
+                          const TextSpan(
+                            text: "Contact Details: ",
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 50, 77, 65),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15),
+                          ),
+                          TextSpan(
+                            text: widget.appointment.userContact,
+                            style: const TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: Color.fromARGB(255, 50, 77, 65),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15),
+                          ),
+                        ]),
+                      ),
+                      onTap: () =>
+                          // ignore: deprecated_member_use
+                          launch('tel:${widget.appointment.userContact}'),
                     ),
                     Text(
                       'Customer Address:  ${widget.appointment.address}',

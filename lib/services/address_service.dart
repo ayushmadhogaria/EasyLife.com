@@ -45,6 +45,8 @@ class AddressServices {
   //book appointments
   Future<void> bookAppointment(
       {required BuildContext context,
+      required String name,
+      required String userContact,
       required String address,
       required String appointDate,
       required String appointTime,
@@ -60,10 +62,14 @@ class AddressServices {
           body: jsonEncode({
             'wishlist': userProvider.user.wishlist,
             'address': address,
+            'userName': name,
+            'userContact': userContact,
             'totalAmount': totalAmount,
             'appointDate': appointDate,
             'appointTime': appointTime,
           }));
+
+      print(res.body);
       httpErrorHandle(
         response: res,
         context: context,

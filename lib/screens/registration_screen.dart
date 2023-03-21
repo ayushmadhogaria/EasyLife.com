@@ -146,12 +146,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             onTap: _togglePasswordView,
                             child: isHiddenPassword
                                 ? const Icon(
-                                    Icons.visibility,
+                                    Icons.visibility_off,
                                     size: 28,
                                     color: Colors.white,
                                   )
                                 : const Icon(
-                                    Icons.visibility_off,
+                                    Icons.visibility,
                                     color: Colors.white,
                                   ),
                           ),

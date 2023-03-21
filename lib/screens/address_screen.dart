@@ -64,6 +64,8 @@ class _AddressScreenState extends State<AddressScreen> {
     await addressServices.bookAppointment(
         context: context,
         address: userAddress,
+        name: context.read<UserProvider>().user.name,
+        userContact: context.read<UserProvider>().user.phone,
         appointDate: DateFormat.yMMMEd().format(_date!),
         appointTime: _time.toString(),
         totalAmount: double.parse(widget.totalAmount));

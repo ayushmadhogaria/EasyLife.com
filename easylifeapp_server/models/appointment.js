@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { servicemanSchema } = require("./serviceman");
+const User = require("./user");
 
 const appointmentSchema = mongoose.Schema({
   servicemans: [
@@ -16,6 +17,14 @@ const appointmentSchema = mongoose.Schema({
     required: true,
   },
   address: {
+    type: String,
+    required: true,
+  },
+  userName: {
+    type: String,
+    required: true,
+  },
+  userContact: {
     type: String,
     required: true,
   },
@@ -39,6 +48,7 @@ const appointmentSchema = mongoose.Schema({
     type: Number,
     default: 1,
   },
+  // user: User.userSchema,
 });
 
 const Appointment = mongoose.model("Appointment", appointmentSchema);
