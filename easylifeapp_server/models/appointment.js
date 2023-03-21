@@ -46,7 +46,7 @@ const appointmentSchema = mongoose.Schema({
   },
   status: {
     type: Number,
-    default: 1,
+    default: 0,
   },
   // user: User.userSchema,
 });

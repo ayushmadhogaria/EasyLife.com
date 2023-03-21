@@ -398,7 +398,6 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
               const SizedBox(
                 height: 10,
               ),
-              // DropdownButton(items: items, onChanged: onChanged)
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
@@ -406,15 +405,6 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                     color: GlobalVariables.unselectednavbarcolor,
                   ),
                 ),
-                // child: Text(widget.appointment.status == 1
-                //     ? "Pending"
-                //     : widget.appointment.status == 2
-                //         ? "Accepted"
-                //         : widget.appointment.status == 3
-                //             ? "Declined"
-                //             : widget.appointment.status == 4
-                //                 ? "Ongoing"
-                //                 : "Completed"),
                 child: Theme(
                   data: ThemeData(
                       // ignore: deprecated_member_use

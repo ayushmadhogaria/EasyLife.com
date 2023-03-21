@@ -1,4 +1,5 @@
 import 'package:easylifeapp/constants/global_variables.dart';
+import 'package:easylifeapp/screens/about_us.dart';
 import 'package:easylifeapp/screens/registration_screen.dart';
 import 'package:easylifeapp/services/auth_service.dart';
 import 'package:easylifeapp/widgets/custom_button.dart';
@@ -165,12 +166,19 @@ class _LoginScreenState extends State<LoginScreen> {
               top: 40.h,
             ),
             alignment: Alignment.bottomCenter,
-            child: const Text("About Us",
-                style: TextStyle(
-                    color: Color.fromARGB(255, 35, 116, 105),
-                    fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.underline,
-                    fontSize: 18)),
+            child: GestureDetector(
+              onTap: () => {
+                {
+                  Navigator.pushNamed(context, AboutUsScreen.routeName),
+                }
+              },
+              child: const Text("About Us",
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 35, 116, 105),
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                      fontSize: 18)),
+            ),
           ),
         ]),
       ),

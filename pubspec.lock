@@ -22,6 +22,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  bulleted_list:
+    dependency: "direct main"
+    description:
+      name: bulleted_list
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1+0.1a"
   carousel_slider:
     dependency: "direct main"
     description:
@@ -223,7 +230,7 @@ packages:
       name: logging
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "0.11.4"
   matcher:
     dependency: transitive
     description:
@@ -357,6 +364,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.5"
+  readmore:
+    dependency: "direct main"
+    description:
+      name: readmore
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0"
   shared_preferences:
     dependency: "direct main"
     description:
