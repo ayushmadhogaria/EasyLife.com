@@ -2,6 +2,7 @@ import 'package:easylifeapp/admin/services/admin_services.dart';
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/models/appointment.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
+import 'package:easylifeapp/screens/map_screen.dart';
 import 'package:easylifeapp/screens/search_screen.dart';
 import 'package:easylifeapp/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -236,6 +237,20 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                           color: Color.fromARGB(255, 50, 77, 65),
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
+                    ),
+                    GestureDetector(
+                      onTap: () => {
+                        {
+                          Navigator.pushNamed(context, MapScreen.routeName),
+                        }
+                      },
+                      child: const Text(
+                        '(Show in maps)',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 48, 10, 7),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13),
+                      ),
                     ),
                   ],
                 ),

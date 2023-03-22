@@ -7,6 +7,7 @@ import 'package:easylifeapp/screens/appointment_details.dart';
 import 'package:easylifeapp/screens/category_detail_screen.dart';
 import 'package:easylifeapp/screens/home_screen.dart';
 import 'package:easylifeapp/screens/login_screen.dart';
+import 'package:easylifeapp/screens/map_screen.dart';
 import 'package:easylifeapp/screens/registration_screen.dart';
 import 'package:easylifeapp/screens/search_screen.dart';
 import 'package:easylifeapp/screens/serviceman_detail_screen.dart';
@@ -24,6 +25,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => AboutUsScreen(),
+      );
+    case MapScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const MapScreen(),
       );
     case RegistrationScreen.routeName:
       return MaterialPageRoute(

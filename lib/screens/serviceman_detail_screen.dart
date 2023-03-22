@@ -3,6 +3,7 @@ import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/models/serviceman.dart';
 import 'package:easylifeapp/providers/navigation_provider.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
+import 'package:easylifeapp/screens/map_screen.dart';
 import 'package:easylifeapp/screens/search_screen.dart';
 import 'package:easylifeapp/services/serviceman_details_services.dart';
 import 'package:easylifeapp/widgets/bottom_bar.dart';
@@ -239,7 +240,7 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
                         fontWeight: FontWeight.bold),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 100.0),
+                    padding: const EdgeInsets.only(left: 230.0),
                     child: RatingStars(
                       rating: avgRating,
                     ),
@@ -260,23 +261,37 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
                 children: [
                   Row(
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(right: 8.0),
-                        child: Icon(
-                          Icons.pin_drop_sharp,
-                          size: 20,
-                          color: Color.fromARGB(255, 61, 117, 93),
+                      GestureDetector(
+                        onTap: () => {
+                          {
+                            Navigator.pushNamed(context, MapScreen.routeName),
+                          }
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.only(right: 8.0),
+                          child: Icon(
+                            Icons.pin_drop_sharp,
+                            size: 20,
+                            color: Color.fromARGB(255, 61, 117, 93),
+                          ),
                         ),
                       ),
-                      Text(
-                        widget.serviceman.address,
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 61, 117, 93),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
+                      GestureDetector(
+                        onTap: () => {
+                          {
+                            Navigator.pushNamed(context, MapScreen.routeName),
+                          }
+                        },
+                        child: Text(
+                          widget.serviceman.address,
+                          style: const TextStyle(
+                              color: Color.fromARGB(255, 61, 117, 93),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                       const Padding(
-                        padding: EdgeInsets.only(left: 15.0, right: 10),
+                        padding: EdgeInsets.only(left: 20.0, right: 10),
                         child: Text(
                           '|',
                           style: TextStyle(
@@ -324,7 +339,7 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
                       Row(
                         children: [
                           const Padding(
-                            padding: EdgeInsets.only(right: 8.0),
+                            padding: EdgeInsets.only(right: 5.0),
                             child: Icon(
                               Icons.timelapse,
                               size: 20,
