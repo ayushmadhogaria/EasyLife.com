@@ -3,9 +3,11 @@ import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:readmore/readmore.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class AboutUsScreen extends StatelessWidget {
+  final String email = 'ayushmadhogaria3012@gmail.com';
   static const String routeName = '/aboutus-screen';
 
   String content =
@@ -73,7 +75,7 @@ class AboutUsScreen extends StatelessWidget {
                 decorationThickness: 2,
                 height: 2,
                 fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 29, 39, 35)),
+                color: Color.fromARGB(255, 55, 77, 68)),
           ),
           const Text(
             '"Best Living Experience with EasyLife.com"',
@@ -81,7 +83,7 @@ class AboutUsScreen extends StatelessWidget {
                 fontSize: 16,
                 height: 2,
                 fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 29, 39, 35)),
+                color: Color.fromARGB(255, 55, 77, 68)),
           ),
           Padding(
             padding: const EdgeInsets.only(
@@ -95,11 +97,12 @@ class AboutUsScreen extends StatelessWidget {
               trimExpandedText: " Read Less",
               lessStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 0, 0, 0),
+                color: Color.fromARGB(255, 55, 77, 68),
               ),
               moreStyle: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 0, 0, 0)),
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 55, 77, 68),
+              ),
               style: const TextStyle(
                   fontSize: 16,
                   height: 2,
@@ -154,23 +157,110 @@ class AboutUsScreen extends StatelessWidget {
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
-                            side: BorderSide(color: Colors.black))),
+                            side: const BorderSide(color: Colors.black))),
                   ),
                   onPressed: () {
                     showModalBottomSheet(
                         context: context,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          topLeft: Radius.circular(20),
-                        )),
-                        builder: (BuildContext context) {
+                        backgroundColor: Colors.transparent,
+                        builder: (context) {
                           return Container(
-                            height: 200,
+                            height: 150,
+                            decoration: const BoxDecoration(
+                                color: GlobalVariables.backgroundcolor,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(25),
+                                  topRight: Radius.circular(25),
+                                )),
+                            child: Column(children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20.0, right: 20),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text(
+                                      'Contact Us',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          height: 2,
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              Color.fromARGB(255, 55, 77, 68)),
+                                    ),
+                                    InkWell(
+                                      child: const Icon(
+                                        Icons.close,
+                                        color: Color.fromARGB(255, 57, 68, 63),
+                                      ),
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20.0, right: 20, top: 20),
+                                child: Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.phone,
+                                      size: 20,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        launch('tel: +977-9808185333');
+                                      },
+                                      child: const Text(
+                                        '  +977-9808185333',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color.fromARGB(
+                                                255, 55, 77, 68)),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20.0, right: 20, top: 30),
+                                child: Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.email,
+                                      size: 20,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        final url = 'mailto:$email';
+                                        if (await canLaunch(url)) {
+                                          await launch(url);
+                                        } else {
+                                          throw 'Could not launch $url';
+                                        }
+                                      },
+                                      child: const Text(
+                                        '   ayushmadhogaria3012@gmail.com',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color.fromARGB(
+                                                255, 55, 77, 68)),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ]),
                           );
                         });
                   },
-                  child: Text('Contact Us')),
+                  child: const Text('Contact Us')),
             ),
           ),
         ],
