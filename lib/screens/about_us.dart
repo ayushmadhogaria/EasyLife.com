@@ -237,9 +237,14 @@ class AboutUsScreen extends StatelessWidget {
                                     ),
                                     GestureDetector(
                                       onTap: () async {
+                                        final Uri emailLaunchUri = Uri(
+                                          scheme: 'mailto',
+                                          path: email,
+                                        );
                                         final url = 'mailto:$email';
-                                        if (await canLaunch(url)) {
-                                          await launch(url);
+                                        if (await canLaunchUrl(
+                                            emailLaunchUri)) {
+                                          await canLaunchUrl(emailLaunchUri);
                                         } else {
                                           throw 'Could not launch $url';
                                         }
