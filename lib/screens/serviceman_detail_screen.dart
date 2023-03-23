@@ -311,19 +311,119 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
                             ),
                           ),
                           GestureDetector(
-                            child: Text(
-                              widget.serviceman.phone,
-                              style: const TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  decorationThickness: 2,
-                                  color: Color.fromARGB(255, 61, 117, 93),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            onTap: () =>
-                                // ignore: deprecated_member_use
-                                launch('tel:${widget.serviceman.phone}'),
-                          ),
+                              child: Text(
+                                widget.serviceman.phone,
+                                style: const TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    decorationThickness: 2,
+                                    color: Color.fromARGB(255, 61, 117, 93),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onTap: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    backgroundColor: Colors.transparent,
+                                    builder: (context) {
+                                      return Container(
+                                        height: 150,
+                                        decoration: const BoxDecoration(
+                                            color:
+                                                GlobalVariables.backgroundcolor,
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(25),
+                                              topRight: Radius.circular(25),
+                                            )),
+                                        child: Column(children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 20.0, right: 20),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const Text(
+                                                  'Contact Via',
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      height: 2,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Color.fromARGB(
+                                                          255, 55, 77, 68)),
+                                                ),
+                                                InkWell(
+                                                  child: const Icon(
+                                                    Icons.close,
+                                                    color: Color.fromARGB(
+                                                        255, 57, 68, 63),
+                                                  ),
+                                                  onTap: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 20.0, right: 20, top: 20),
+                                            child: Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.message,
+                                                  size: 20,
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    launch(
+                                                        'sms:  ${widget.serviceman.phone}');
+                                                  },
+                                                  child: const Text(
+                                                    '      Send SMS',
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Color.fromARGB(
+                                                            255, 55, 77, 68)),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 20.0, right: 20, top: 20),
+                                            child: Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.phone,
+                                                  size: 20,
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    launch(
+                                                        'tel: + ${widget.serviceman.phone}');
+                                                  },
+                                                  child: Text(
+                                                    '      ${widget.serviceman.phone}',
+                                                    style: const TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Color.fromARGB(
+                                                            255, 55, 77, 68)),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ]),
+                                      );
+                                    });
+                              }),
                         ],
                       ),
                       const Padding(

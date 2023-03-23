@@ -152,12 +152,13 @@ class AboutUsScreen extends StatelessWidget {
                   style: ButtonStyle(
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.black),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        GlobalVariables.unselectednavbarcolor),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
-                            side: const BorderSide(color: Colors.black))),
+                            side: const BorderSide(
+                                color: GlobalVariables.unselectednavbarcolor))),
                   ),
                   onPressed: () {
                     showModalBottomSheet(

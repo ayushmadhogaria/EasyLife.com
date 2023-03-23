@@ -8,6 +8,7 @@ import 'package:easylifeapp/constants/utils.dart';
 import 'package:easylifeapp/models/user.dart';
 import 'package:easylifeapp/providers/navigation_provider.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
+import 'package:easylifeapp/serviceman/screens/serviceman_screen.dart';
 import 'package:easylifeapp/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -98,11 +99,18 @@ class AuthService {
                 context,
                 MaterialPageRoute(builder: (context) => AdminScreen()),
                 (route) => false);
-          } else {
+          } else if (user.type.toLowerCase() == 'customer') {
             context.read<NavigationProvider>().selectedIndex = 0;
             Navigator.pushNamedAndRemoveUntil(
               context,
               BottomBar.routeName,
+              (route) => false,
+            );
+          } else {
+            context.read<NavigationProvider>().selectedIndex = 0;
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => ServicemanScreen()),
               (route) => false,
             );
           }

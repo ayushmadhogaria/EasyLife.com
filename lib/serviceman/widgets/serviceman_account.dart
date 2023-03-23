@@ -1,3 +1,4 @@
+import 'package:easylifeapp/admin/screens/add_serviceman_screen.dart';
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
 import 'package:easylifeapp/screens/about_us.dart';
@@ -8,24 +9,55 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class SettingsBody extends StatelessWidget {
-  const SettingsBody({super.key});
+class ServicemanAccount extends StatefulWidget {
+  const ServicemanAccount({super.key});
+  @override
+  State<ServicemanAccount> createState() => _ServicemanAccountState();
+}
+
+class _ServicemanAccountState extends State<ServicemanAccount> {
+  void navigateToAddServiceMan() async {
+    await Navigator.pushNamed(context, AddServiceManScreen.routeName);
+  }
+
   final String email = 'ayushmadhogaria3012@gmail.com';
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
+      padding: const EdgeInsets.only(top: 20.0),
       child: Column(
         children: [
           Container(
             padding: const EdgeInsets.all(8),
-            height: 200.h,
+            height: 250.h,
             decoration: BoxDecoration(
                 gradient: GlobalVariables.buttoncolor,
                 borderRadius: BorderRadius.circular(10)),
             child: ListView(
               children: [
+                ListTile(
+                  onTap: navigateToAddServiceMan,
+                  leading: const Icon(
+                    Icons.add_rounded,
+                    size: 30,
+                  ),
+                  iconColor: const Color.fromARGB(255, 23, 59, 47),
+                  title: Wrap(
+                    spacing: 120,
+                    children: const [
+                      Text(
+                        'Register services',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromARGB(255, 23, 59, 47)),
+                      ),
+                    ],
+                  ),
+                  trailing: const Icon(Icons.arrow_forward_ios,
+                      size: 15, color: Color.fromARGB(255, 23, 59, 47)),
+                ),
                 ListTile(
                   onTap: () {
                     showModalBottomSheet(

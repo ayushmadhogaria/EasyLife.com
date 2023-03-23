@@ -1,4 +1,6 @@
+import 'package:easylifeapp/admin/screens/appointment_screen.dart';
 import 'package:easylifeapp/constants/global_variables.dart';
+import 'package:easylifeapp/serviceman/screens/serviceman_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -15,18 +17,8 @@ class _ServicemanScreenState extends State<ServicemanScreen> {
   double bottomBarborderWidth = 5;
 
   List<Widget> pages = [
-    const Center(
-      child: Text("Posts page"),
-    ),
-    const Center(
-      child: Text("Appointments"),
-    ),
-    const Center(
-      child: Text("Settings"),
-    ),
-    const Center(
-      child: Text("Settings"),
-    ),
+    const AppointmentsScreen(),
+    const ServicemanProfile(),
   ];
 
   void updatePage(int page) {
@@ -59,7 +51,7 @@ class _ServicemanScreenState extends State<ServicemanScreen> {
                 ),
               ),
               const Text(
-                'Admin Panel',
+                'Serviceman Panel',
                 style: TextStyle(
                     color: Color.fromARGB(255, 61, 117, 93),
                     fontWeight: FontWeight.bold),
@@ -75,27 +67,9 @@ class _ServicemanScreenState extends State<ServicemanScreen> {
         selectedItemColor: const Color.fromARGB(255, 40, 119, 124),
         unselectedItemColor: const Color.fromARGB(255, 48, 145, 137),
         backgroundColor: GlobalVariables.backgroundcolor,
-        iconSize: 28,
+        iconSize: 22,
         onTap: updatePage,
         items: [
-          //all serviceman lists
-          BottomNavigationBarItem(
-              icon: Container(
-                width: bottomNavBarWidth,
-                decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: _page == 0
-                          ? GlobalVariables.selectednavbarcolor
-                          : GlobalVariables.backgroundcolor,
-                      width: bottomBarborderWidth,
-                    ),
-                  ),
-                ),
-                child: const Icon(Icons.home_outlined),
-              ),
-              label: 'Home'),
-
           //all appointments
           BottomNavigationBarItem(
             icon: Container(
@@ -103,7 +77,7 @@ class _ServicemanScreenState extends State<ServicemanScreen> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _page == 1
+                    color: _page == 0
                         ? GlobalVariables.selectednavbarcolor
                         : GlobalVariables.backgroundcolor,
                     width: bottomBarborderWidth,
@@ -120,7 +94,7 @@ class _ServicemanScreenState extends State<ServicemanScreen> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _page == 3
+                    color: _page == 1
                         ? GlobalVariables.selectednavbarcolor
                         : GlobalVariables.backgroundcolor,
                     width: bottomBarborderWidth,

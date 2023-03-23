@@ -208,29 +208,124 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                           fontSize: 15),
                     ),
                     GestureDetector(
-                      child: RichText(
-                        text: TextSpan(children: [
-                          const TextSpan(
-                            text: "Contact Details: ",
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 50, 77, 65),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15),
-                          ),
-                          TextSpan(
-                            text: widget.appointment.userContact,
-                            style: const TextStyle(
-                                decoration: TextDecoration.underline,
-                                color: Color.fromARGB(255, 50, 77, 65),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15),
-                          ),
-                        ]),
-                      ),
-                      onTap: () =>
-                          // ignore: deprecated_member_use
-                          launch('tel:${widget.appointment.userContact}'),
-                    ),
+                        child: RichText(
+                          text: TextSpan(children: [
+                            const TextSpan(
+                              text: "Contact Details: ",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 50, 77, 65),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
+                            TextSpan(
+                              text: widget.appointment.userContact,
+                              style: const TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: Color.fromARGB(255, 50, 77, 65),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
+                          ]),
+                        ),
+                        onTap: () {
+                          showModalBottomSheet(
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              builder: (context) {
+                                return Container(
+                                  height: 150,
+                                  decoration: const BoxDecoration(
+                                      color: GlobalVariables.backgroundcolor,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(25),
+                                        topRight: Radius.circular(25),
+                                      )),
+                                  child: Column(children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 20.0, right: 20),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Text(
+                                            'Contact Via',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                height: 2,
+                                                fontWeight: FontWeight.bold,
+                                                color: Color.fromARGB(
+                                                    255, 55, 77, 68)),
+                                          ),
+                                          InkWell(
+                                            child: const Icon(
+                                              Icons.close,
+                                              color: Color.fromARGB(
+                                                  255, 57, 68, 63),
+                                            ),
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 20.0, right: 20, top: 20),
+                                      child: Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.message,
+                                            size: 20,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              launch(
+                                                  'sms:  ${widget.appointment.userContact}');
+                                            },
+                                            child: const Text(
+                                              '      Send SMS',
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color.fromARGB(
+                                                      255, 55, 77, 68)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 20.0, right: 20, top: 20),
+                                      child: Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.phone,
+                                            size: 20,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              launch(
+                                                  'tel: + ${widget.appointment.userContact}');
+                                            },
+                                            child: Text(
+                                              '      ${widget.appointment.userContact}',
+                                              style: const TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color.fromARGB(
+                                                      255, 55, 77, 68)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ]),
+                                );
+                              });
+                        }),
                     Text(
                       'Customer Address:  ${widget.appointment.address}',
                       style: const TextStyle(
@@ -430,7 +525,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                   child: Stepper(
                     currentStep: currentStep,
                     controlsBuilder: ((context, details) {
-                      if (user.type == 'Admin') {
+                      if (user.type == 'Admin' || user.type == 'Serviceman') {
                         return CustomButton(
                             text: 'Done',
                             onTap: () {
