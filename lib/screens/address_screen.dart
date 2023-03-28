@@ -439,84 +439,9 @@ class _AddressScreenState extends State<AddressScreen> {
                         }
                       else
                         {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 247, 247, 247),
-                                  title: Row(
-                                    children: const [
-                                      Icon(
-                                        Icons.wallet,
-                                        size: 20,
-                                        color: Color.fromARGB(255, 51, 66, 60),
-                                      ),
-                                      Text(
-                                        ' Confirm Payment Information',
-                                        style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 51, 66, 60),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 17,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  content: Text(
-                                    'Rs.${widget.totalAmount}',
-                                    style: const TextStyle(
-                                      color: Color.fromARGB(255, 51, 66, 60),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17,
-                                    ),
-                                  ),
-                                  // content: TextField(
-                                  //   controller: _paymenttextController,
-                                  //   decoration: InputDecoration(
-                                  //     hintText: 'Rs. ${widget.totalAmount}',
-                                  //     hintStyle: const TextStyle(
-                                  //       color: Color.fromARGB(255, 51, 66, 60),
-                                  //       fontSize: 17,
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text(
-                                          "Cancel",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                              color: Color.fromARGB(
-                                                  255, 23, 59, 47)),
-                                        )),
-                                    TextButton(
-                                        onPressed: () {
-                                          onPayResult();
-                                          context
-                                              .read<NavigationProvider>()
-                                              .selectedIndex = 2;
-                                          Navigator.pushNamed(
-                                              context, BottomBar.routeName);
-                                        },
-                                        child: const Text(
-                                          "Confirm",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                              color: Color.fromARGB(
-                                                  255, 23, 59, 47)),
-                                        )),
-                                  ],
-                                );
-                              })
+                          onPayResult(),
+                          context.read<NavigationProvider>().selectedIndex = 2,
+                          Navigator.pushNamed(context, BottomBar.routeName),
                         },
                     },
                     child: Container(

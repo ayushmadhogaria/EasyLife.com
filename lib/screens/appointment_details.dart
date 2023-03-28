@@ -150,7 +150,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                 } else {
                   return const Text('Appointment Screen',
                       style: TextStyle(
-                          color: Color.fromARGB(255, 16, 94, 83),
+                          color: Color.fromARGB(255, 9, 39, 35),
                           fontWeight: FontWeight.bold,
                           fontSize: 18));
                 }
@@ -532,7 +532,72 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                               if (currentStep <= 3) {
                                 changeAppointmentStatus(details.currentStep);
                               } else {
-                                print('Task completed');
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 247, 247, 247),
+                                        title: Row(
+                                          children: const [
+                                            Icon(
+                                              Icons.wallet,
+                                              size: 20,
+                                              color: Color.fromARGB(
+                                                  255, 51, 66, 60),
+                                            ),
+                                            Text(
+                                              ' Confirm Payment Information',
+                                              style: TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 51, 66, 60),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        content: Text(
+                                          'Rs.${widget.appointment.totalAmount}',
+                                          style: const TextStyle(
+                                            color:
+                                                Color.fromARGB(255, 51, 66, 60),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 17,
+                                          ),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Text(
+                                                "Cancel",
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Color.fromARGB(
+                                                        255, 23, 59, 47)),
+                                              )),
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Text(
+                                                "Confirm",
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Color.fromARGB(
+                                                        255, 23, 59, 47)),
+                                              )),
+                                        ],
+                                      );
+                                    });
                               }
                             });
                       }
@@ -550,8 +615,8 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                       ),
                       Step(
                         title: const Text('Accepted'),
-                        content:
-                            const Text('Your appointment has been accepted.'),
+                        content: const Text(
+                            'Your appointment is yet to be accepted.'),
                         isActive: currentStep > 1,
                         state: currentStep > 1
                             ? StepState.complete
@@ -559,8 +624,8 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                       ),
                       Step(
                         title: const Text('Declined'),
-                        content:
-                            const Text('Your appointment has been declined.'),
+                        content: const Text(
+                            'Your appointment is yet to be declined.'),
                         isActive: currentStep > 2,
                         state: currentStep > 2
                             ? StepState.complete
@@ -569,7 +634,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                       Step(
                         title: const Text('Ongoing'),
                         content: const Text(
-                            'Your service is currently being carried out.'),
+                            'Your service is yet to be carried out.'),
                         isActive: currentStep > 3,
                         state: currentStep > 3
                             ? StepState.complete

@@ -39,10 +39,8 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: GlobalVariables.loggedinbackgroundcolor,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.h),
-        child: AppBar(
+        backgroundColor: GlobalVariables.loggedinbackgroundcolor,
+        appBar: AppBar(
           elevation: 0.5,
           automaticallyImplyLeading: false,
           flexibleSpace: Container(
@@ -81,57 +79,41 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
             ],
           ),
         ),
-      ),
-      body: servicemanList == null
-          ? const Loader()
-          : servicemanList!.isEmpty
-              ? Padding(
-                  padding: const EdgeInsets.only(top: 200),
-                  child: Column(
-                    children: [
-                      Center(
-                        child: SizedBox(
-                          child: Image.asset(
-                            'assets/noservice.PNG',
+        body: servicemanList == null
+            ? const Loader()
+            : servicemanList!.isEmpty
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 200),
+                    child: Column(
+                      children: [
+                        Center(
+                          child: SizedBox(
+                            child: Image.asset(
+                              'assets/noservice.PNG',
+                            ),
                           ),
                         ),
-                      ),
-                      const Text(
-                        'No serviceman available in this category currently! \n                          Sorry for inconvinience.',
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 61, 117, 93),
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                )
-              : Column(children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Hire professional ${widget.category} For Better Lifestyle',
-                      style: const TextStyle(
-                          fontSize: 18,
-                          color: Color.fromARGB(255, 61, 117, 93),
-                          fontWeight: FontWeight.w400),
+                        const Text(
+                          'No serviceman available in this category currently! \n                          Sorry for inconvinience.',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 61, 117, 93),
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 170,
+                  )
+                : SizedBox(
                     child: GridView.builder(
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.only(
-                        left: 15,
+                      padding: const EdgeInsets.all(
+                        15,
                       ),
                       itemCount: servicemanList!.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 1,
-                        childAspectRatio: 1.4,
+                        crossAxisCount: 2,
                         mainAxisSpacing: 20,
+                        crossAxisSpacing: 10,
                       ),
                       itemBuilder: ((context, index) {
                         final serviceman = servicemanList![index];
@@ -157,11 +139,8 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                                       width: 0.5,
                                     ),
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Image.network(
-                                      serviceman.images[0],
-                                    ),
+                                  child: Image.network(
+                                    serviceman.images[0],
                                   ),
                                 ),
                               ),
@@ -184,8 +163,6 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                         );
                       }),
                     ),
-                  )
-                ]),
-    );
+                  ));
   }
 }

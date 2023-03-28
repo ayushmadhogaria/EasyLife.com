@@ -56,22 +56,19 @@ class _MapScreenState extends State<MapScreen> {
     showModalBottomSheet(
         context: context,
         builder: (context) {
-          return SizedBox(
-            height: 800,
-            child: Center(
-              child: OpenStreetMapSearchAndPick(
-                center: LatLong(latitude, longitude),
-                buttonColor: GlobalVariables.unselectednavbarcolor,
-                buttonText: 'Set Destination',
-                onPicked: (pickedData) {
-                  Navigator.pop(context);
-                  setState(() {
-                    locationAddress = pickedData.address;
-                    latitude = pickedData.latLong.latitude;
-                    longitude = pickedData.latLong.longitude;
-                  });
-                },
-              ),
+          return Center(
+            child: OpenStreetMapSearchAndPick(
+              center: LatLong(latitude, longitude),
+              buttonColor: GlobalVariables.unselectednavbarcolor,
+              buttonText: 'Set Destination',
+              onPicked: (pickedData) {
+                Navigator.pop(context);
+                setState(() {
+                  locationAddress = pickedData.address;
+                  latitude = pickedData.latLong.latitude;
+                  longitude = pickedData.latLong.longitude;
+                });
+              },
             ),
           );
         });

@@ -75,30 +75,27 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
     final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
       backgroundColor: GlobalVariables.loggedinbackgroundcolor,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50.h),
-        child: AppBar(
-          elevation: 0.5,
-          automaticallyImplyLeading: false,
-          flexibleSpace: Container(
-            decoration:
-                const BoxDecoration(gradient: GlobalVariables.buttoncolor),
-          ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InkWell(
-                child: const Icon(
-                  Icons.arrow_back_ios_new_sharp,
-                  color: Color.fromARGB(255, 57, 68, 63),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                },
+      appBar: AppBar(
+        elevation: 0.5,
+        automaticallyImplyLeading: false,
+        flexibleSpace: Container(
+          decoration:
+              const BoxDecoration(gradient: GlobalVariables.buttoncolor),
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+              child: const Icon(
+                Icons.arrow_back_ios_new_sharp,
+                color: Color.fromARGB(255, 57, 68, 63),
               ),
-              Builder(builder: (context) {
-                if (user.type == 'Customer') {
-                  return Expanded(
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            user.type == 'Customer'
+                ? Expanded(
                     child: Container(
                         height: 40,
                         margin: const EdgeInsets.only(left: 10),
@@ -152,33 +149,24 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
                                     fontWeight: FontWeight.w400)),
                           ),
                         )),
-                  );
-                } else {
-                  return const Text('Serviceman Detail Screen',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 16, 94, 83),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18));
-                }
-              }),
-              Builder(builder: (context) {
-                if (user.type == 'Customer') {
-                  return Container(
-                    color: Colors.transparent,
-                    height: 40,
-                    margin: const EdgeInsets.symmetric(horizontal: 5),
-                    child: const Icon(
-                      Icons.mic,
-                      color: Colors.white,
-                      size: 28,
-                    ),
-                  );
-                } else {
-                  return Container();
-                }
-              })
-            ],
-          ),
+                  )
+                : const Text('Serviceman Detail Screen',
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 16, 94, 83),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18)),
+            if (user.type == 'Customer')
+              Container(
+                color: Colors.transparent,
+                height: 40,
+                margin: const EdgeInsets.symmetric(horizontal: 5),
+                child: const Icon(
+                  Icons.mic,
+                  color: Colors.white,
+                  size: 28,
+                ),
+              )
+          ],
         ),
       ),
       body: SingleChildScrollView(
@@ -227,23 +215,23 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
-                vertical: 15,
-                horizontal: 10,
+                vertical: 10,
+                horizontal: 20,
               ),
               child: Row(
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
+                    // 'ayush Madhogaria',
                     widget.serviceman.name,
                     style: const TextStyle(
                         color: Color.fromARGB(255, 61, 117, 93),
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 230.0),
-                    child: RatingStars(
-                      rating: avgRating,
-                    ),
+                  RatingStars(
+                    rating: avgRating,
                   ),
                 ],
               ),
@@ -259,7 +247,7 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: [
-                  Row(
+                  Wrap(
                     children: [
                       GestureDetector(
                         onTap: () => {
@@ -301,6 +289,7 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
                         ),
                       ),
                       Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           const Padding(
                             padding: EdgeInsets.only(right: 8.0),
@@ -565,9 +554,7 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
                   ),
                 );
               } else {
-                return const SizedBox(
-                  height: 0,
-                );
+                return SizedBox();
               }
             }),
             Builder(builder: (context) {

@@ -42,6 +42,7 @@ class _AllServiceManScreenState extends State<AllServiceManScreen> {
 
   void navigateToAddServiceMan() async {
     await Navigator.pushNamed(context, AddServiceManScreen.routeName);
+    fetchAllServiceman();
   }
 
   @override
