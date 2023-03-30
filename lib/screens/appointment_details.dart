@@ -26,6 +26,7 @@ class AppointmentDetailScreen extends StatefulWidget {
 
 class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
   int currentStep = 0;
+  StepState completedStep = StepState.disabled;
   final AdminServices adminServices = AdminServices();
 
   void navigateToSearchScreen(String query) {
@@ -50,7 +51,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
     currentStep = widget.appointment.status;
   }
 
-  //admin function for changing appointment status
+  //admin and serviceman function for changing appointment status
   void changeAppointmentStatus(int status) {
     adminServices.changeAppointmentStatus(
       context: context,
@@ -500,6 +501,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
               const SizedBox(
                 height: 10,
               ),
+              //appointment status
               const Text('Track appointment status',
                   style: TextStyle(
                       color: Color.fromARGB(255, 16, 94, 83),
@@ -529,9 +531,9 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                         return CustomButton(
                             text: 'Done',
                             onTap: () {
-                              if (currentStep <= 3) {
+                              if (currentStep < 3) {
                                 changeAppointmentStatus(details.currentStep);
-                              } else {
+                              } else if (currentStep == 3) {
                                 showDialog(
                                     context: context,
                                     builder: (context) {
@@ -551,7 +553,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                                                   255, 51, 66, 60),
                                             ),
                                             Text(
-                                              ' Confirm Payment Information',
+                                              'Confirm payment information',
                                               style: TextStyle(
                                                 color: Color.fromARGB(
                                                     255, 51, 66, 60),
@@ -574,21 +576,29 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                                           TextButton(
                                               onPressed: () {
                                                 Navigator.pop(context);
+                                                changeAppointmentStatus(
+                                                    details.currentStep);
+
+                                                setState(() {
+                                                  // currentStep += 1;
+                                                  completedStep =
+                                                      StepState.complete;
+                                                });
                                               },
                                               child: const Text(
-                                                "Cancel",
+                                                "Complete appointment",
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.w600,
                                                     color: Color.fromARGB(
-                                                        255, 23, 59, 47)),
+                                                        255, 99, 24, 24)),
                                               )),
                                           TextButton(
                                               onPressed: () {
                                                 Navigator.pop(context);
                                               },
                                               child: const Text(
-                                                "Confirm",
+                                                "Cancel",
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.w600,
@@ -608,7 +618,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                       Step(
                         title: const Text('Pending'),
                         content: const Text('Appointment yet to be responded.'),
-                        isActive: currentStep > 0,
+                        isActive: currentStep >= 0,
                         state: currentStep > 0
                             ? StepState.complete
                             : StepState.indexed,
@@ -617,7 +627,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                         title: const Text('Accepted'),
                         content: const Text(
                             'Your appointment is yet to be accepted.'),
-                        isActive: currentStep > 1,
+                        isActive: currentStep >= 1,
                         state: currentStep > 1
                             ? StepState.complete
                             : StepState.indexed,
@@ -626,7 +636,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                         title: const Text('Declined'),
                         content: const Text(
                             'Your appointment is yet to be declined.'),
-                        isActive: currentStep > 2,
+                        isActive: currentStep >= 2,
                         state: currentStep > 2
                             ? StepState.complete
                             : StepState.indexed,
@@ -635,7 +645,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                         title: const Text('Ongoing'),
                         content: const Text(
                             'Your service is yet to be carried out.'),
-                        isActive: currentStep > 3,
+                        isActive: currentStep >= 3,
                         state: currentStep > 3
                             ? StepState.complete
                             : StepState.indexed,
@@ -645,9 +655,10 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                         content:
                             const Text('Your appointment has been completed.'),
                         isActive: currentStep >= 4,
-                        state: currentStep >= 4
+                        state: currentStep > 3
                             ? StepState.complete
                             : StepState.indexed,
+                        // state: completedStep
                       ),
                     ],
                   ),
