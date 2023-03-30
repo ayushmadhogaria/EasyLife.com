@@ -168,7 +168,6 @@ class AuthService {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       await sharedPreferences.remove('x-auth-token');
-      // ignore: use_build_context_synchronously
       return;
     } catch (e) {
       showSnackBar(context, e.toString());

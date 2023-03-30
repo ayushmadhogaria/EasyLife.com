@@ -119,7 +119,7 @@ class AboutUsScreen extends StatelessWidget {
                   color: Color.fromARGB(255, 29, 39, 35)),
             ),
             children: [
-              Container(
+              SizedBox(
                 height: 200,
                 child: SingleChildScrollView(
                     child: Column(
@@ -144,7 +144,7 @@ class AboutUsScreen extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: EdgeInsets.only(top: 40, bottom: 30),
+            padding: const EdgeInsets.only(top: 40, bottom: 30),
             child: SizedBox(
               height: 50,
               width: 200,
@@ -213,6 +213,7 @@ class AboutUsScreen extends StatelessWidget {
                                     ),
                                     GestureDetector(
                                       onTap: () {
+                                        // ignore: deprecated_member_use
                                         launch('tel: +977-9808185333');
                                       },
                                       child: const Text(
