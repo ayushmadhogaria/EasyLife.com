@@ -1,7 +1,7 @@
 import 'package:easylifeapp/admin/screens/add_serviceman_screen.dart';
 import 'package:easylifeapp/models/appointment.dart';
 import 'package:easylifeapp/models/serviceman.dart';
-import 'package:easylifeapp/screens/about_us.dart';
+import 'package:easylifeapp/screens/about_us_screen.dart';
 import 'package:easylifeapp/screens/address_screen.dart';
 import 'package:easylifeapp/screens/appointment_details.dart';
 import 'package:easylifeapp/screens/category_detail_screen.dart';

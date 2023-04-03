@@ -37,12 +37,12 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    final _page = Provider.of<NavigationProvider>(context).selectedIndex;
+    final page = Provider.of<NavigationProvider>(context).selectedIndex;
     final userWishlistLen = context.watch<UserProvider>().user.wishlist;
     return Scaffold(
-      body: pages[_page],
+      body: pages[page],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _page,
+        currentIndex: page,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: const Color.fromARGB(255, 40, 119, 124),
         unselectedItemColor: const Color.fromARGB(255, 48, 145, 137),
@@ -58,7 +58,7 @@ class _BottomBarState extends State<BottomBar> {
                 decoration: BoxDecoration(
                   border: Border(
                     top: BorderSide(
-                      color: _page == 0
+                      color: page == 0
                           ? GlobalVariables.selectednavbarcolor
                           : GlobalVariables.backgroundcolor,
                       width: bottomBarborderWidth,
@@ -74,7 +74,7 @@ class _BottomBarState extends State<BottomBar> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _page == 1
+                    color: page == 1
                         ? GlobalVariables.selectednavbarcolor
                         : GlobalVariables.backgroundcolor,
                     width: bottomBarborderWidth,
@@ -91,7 +91,7 @@ class _BottomBarState extends State<BottomBar> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _page == 2
+                    color: page == 2
                         ? GlobalVariables.selectednavbarcolor
                         : GlobalVariables.backgroundcolor,
                     width: bottomBarborderWidth,
@@ -118,7 +118,7 @@ class _BottomBarState extends State<BottomBar> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _page == 3
+                    color: page == 3
                         ? GlobalVariables.selectednavbarcolor
                         : GlobalVariables.backgroundcolor,
                     width: bottomBarborderWidth,

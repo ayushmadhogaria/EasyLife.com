@@ -97,7 +97,7 @@ class AuthService {
           if (user.type.toLowerCase() == 'admin') {
             Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => AdminScreen()),
+                MaterialPageRoute(builder: (context) => const AdminScreen()),
                 (route) => false);
           } else if (user.type.toLowerCase() == 'customer') {
             context.read<NavigationProvider>().selectedIndex = 0;
@@ -110,7 +110,7 @@ class AuthService {
             context.read<NavigationProvider>().selectedIndex = 0;
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => ServicemanScreen()),
+              MaterialPageRoute(builder: (context) => const ServicemanScreen()),
               (route) => false,
             );
           }
@@ -153,7 +153,6 @@ class AuthService {
           },
         );
 
-        // ignore: use_build_context_synchronously
         var userProvider = Provider.of<UserProvider>(context, listen: false);
         userProvider.setUser(userRes.body);
       }

@@ -1,5 +1,5 @@
 import 'package:easylifeapp/constants/global_variables.dart';
-import 'package:easylifeapp/screens/about_us.dart';
+import 'package:easylifeapp/screens/about_us_screen.dart';
 import 'package:easylifeapp/screens/registration_screen.dart';
 import 'package:easylifeapp/services/auth_service.dart';
 import 'package:easylifeapp/widgets/custom_button.dart';

@@ -1,6 +1,6 @@
 import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
-import 'package:easylifeapp/screens/about_us.dart';
+import 'package:easylifeapp/screens/about_us_screen.dart';
 import 'package:easylifeapp/screens/login_screen.dart';
 import 'package:easylifeapp/services/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -80,6 +80,7 @@ class SettingsBody extends StatelessWidget {
                                     ),
                                     GestureDetector(
                                       onTap: () {
+                                        // ignore: deprecated_member_use
                                         launch('sms: +977-9808185333');
                                       },
                                       child: const Text(
@@ -105,6 +106,7 @@ class SettingsBody extends StatelessWidget {
                                     ),
                                     GestureDetector(
                                       onTap: () {
+                                        // ignore: deprecated_member_use
                                         launch('tel: +977-9808185333');
                                       },
                                       child: const Text(
@@ -258,7 +260,9 @@ class SettingsBody extends StatelessWidget {
                               TextButton(
                                   onPressed: () async {
                                     await AuthService().logOut(context);
+                                    // ignore: use_build_context_synchronously
                                     context.read<UserProvider>().logout();
+                                    // ignore: use_build_context_synchronously
                                     Navigator.pushNamedAndRemoveUntil(
                                         context,
                                         LoginScreen.routeName,

@@ -69,12 +69,12 @@ class AddressServices {
             'appointTime': appointTime,
           }));
 
-      print(res.body);
       httpErrorHandle(
         response: res,
         context: context,
         onSuccess: () {
-          showSnackBar(context, 'Your appointment have been confirmed!');
+          showSnackBar(context,
+              'Your appointment have been placed! Kindly check the status for updates.');
           User user = userProvider.user.copyWith(
             wishlist: [],
             name: jsonDecode(res.body)['userName'],

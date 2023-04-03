@@ -366,6 +366,7 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
                                                 ),
                                                 GestureDetector(
                                                   onTap: () {
+                                                    // ignore: deprecated_member_use
                                                     launch(
                                                         'sms:  ${widget.serviceman.phone}');
                                                   },
@@ -393,6 +394,7 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
                                                 ),
                                                 GestureDetector(
                                                   onTap: () {
+                                                    // ignore: deprecated_member_use
                                                     launch(
                                                         'tel: + ${widget.serviceman.phone}');
                                                   },
@@ -554,7 +556,7 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
                   ),
                 );
               } else {
-                return SizedBox();
+                return const SizedBox();
               }
             }),
             Builder(builder: (context) {
@@ -594,7 +596,7 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
                   height: 0,
                 );
               }
-              ;
+              
             }),
             Padding(
               padding: const EdgeInsets.only(top: 12.0),
