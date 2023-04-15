@@ -1,11 +1,11 @@
-import 'package:easylifeapp/admin/screens/admin_screen.dart';
+import 'package:easylifeapp/features/admin/screens/admin_screen.dart';
 import 'package:easylifeapp/providers/navigation_provider.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
 import 'package:easylifeapp/router.dart';
-import 'package:easylifeapp/screens/splash_screen.dart';
-import 'package:easylifeapp/serviceman/screens/serviceman_screen.dart';
-import 'package:easylifeapp/services/auth_service.dart';
-import 'package:easylifeapp/widgets/bottom_bar.dart';
+import 'package:easylifeapp/features/commons/screens/splash_screen.dart';
+import 'package:easylifeapp/features/serviceman/screens/serviceman_screen.dart';
+import 'package:easylifeapp/features/auth/services/auth_service.dart';
+import 'package:easylifeapp/features/customer/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';

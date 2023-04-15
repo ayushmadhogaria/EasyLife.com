@@ -22,6 +22,3 @@ void httpErrorHandle({
       showSnackBar(context, response.body);
   }
 }
-
-
-

@@ -1,18 +1,18 @@
-import 'package:easylifeapp/admin/screens/add_serviceman_screen.dart';
+import 'package:easylifeapp/features/admin/screens/add_serviceman_screen.dart';
 import 'package:easylifeapp/models/appointment.dart';
 import 'package:easylifeapp/models/serviceman.dart';
-import 'package:easylifeapp/screens/about_us_screen.dart';
-import 'package:easylifeapp/screens/address_screen.dart';
-import 'package:easylifeapp/screens/appointment_details.dart';
-import 'package:easylifeapp/screens/category_detail_screen.dart';
-import 'package:easylifeapp/screens/home_screen.dart';
-import 'package:easylifeapp/screens/login_screen.dart';
-import 'package:easylifeapp/screens/map_screen.dart';
-import 'package:easylifeapp/screens/registration_screen.dart';
-import 'package:easylifeapp/screens/search_screen.dart';
-import 'package:easylifeapp/screens/serviceman_detail_screen.dart';
-import 'package:easylifeapp/screens/terms_condition_screen.dart';
-import 'package:easylifeapp/widgets/bottom_bar.dart';
+import 'package:easylifeapp/features/commons/screens/about_us_screen.dart';
+import 'package:easylifeapp/features/address/screens/address_screen.dart';
+import 'package:easylifeapp/features/appointment_detail/appointment_details.dart';
+import 'package:easylifeapp/features/home/screens/category_detail_screen.dart';
+import 'package:easylifeapp/features/home/screens/home_screen.dart';
+import 'package:easylifeapp/features/auth/screens/login_screen.dart';
+import 'package:easylifeapp/features/commons/screens/map_screen.dart';
+import 'package:easylifeapp/features/auth/screens/registration_screen.dart';
+import 'package:easylifeapp/features/search_serviceman/screens/search_screen.dart';
+import 'package:easylifeapp/features/serviceman_detail/screens/serviceman_detail_screen.dart';
+import 'package:easylifeapp/features/commons/screens/terms_condition_screen.dart';
+import 'package:easylifeapp/features/customer/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
