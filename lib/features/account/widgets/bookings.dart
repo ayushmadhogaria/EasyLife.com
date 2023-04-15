@@ -1,4 +1,5 @@
 import 'package:easylifeapp/constants/global_variables.dart';
+import 'package:easylifeapp/features/address/services/address_service.dart';
 import 'package:easylifeapp/models/appointment.dart';
 import 'package:easylifeapp/features/appointment_detail/appointment_details.dart';
 import 'package:easylifeapp/features/account/services/account_service.dart';
@@ -17,6 +18,7 @@ class Bookings extends StatefulWidget {
 class _BookingsState extends State<Bookings> {
   List<Appointment>? appointments;
   final AccountServices accountServices = AccountServices();
+  final AddressServices addressServices = AddressServices();
 
   @override
   void initState() {
@@ -29,6 +31,17 @@ class _BookingsState extends State<Bookings> {
       context: context,
     );
     setState(() {});
+  }
+
+  //delete the appointment
+  void deleteAppointment(Appointment app, int index) {
+    addressServices.deleteAppointment(
+        context: context,
+        appointment: app,
+        onSuccess: () {
+          appointments!.removeAt(index);
+          setState(() {});
+        });
   }
 
   @override
@@ -81,32 +94,114 @@ class _BookingsState extends State<Bookings> {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 60.h),
-                    child: Container(
-                        height: 170,
-                        padding:
-                            const EdgeInsets.only(left: 10, top: 20, right: 0),
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: appointments!.length,
-                          itemBuilder: ((context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  AppointmentDetailScreen.routeName,
-                                  arguments: appointments![index],
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                            height: 510,
+                            child: GridView.builder(
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2),
+                              itemCount: appointments!.length,
+                              itemBuilder: ((context, index) {
+                                final appointmentData = appointments![index];
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      AppointmentDetailScreen.routeName,
+                                      arguments: appointments![index],
+                                    );
+                                  },
+                                  child: Column(
+                                    children: [
+                                      IndividualBooking(
+                                        image: appointmentData
+                                            .servicemans[0].images[0],
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return AlertDialog(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  backgroundColor:
+                                                      const Color.fromARGB(
+                                                          255, 233, 250, 244),
+                                                  title: const Text(
+                                                    "Are you sure to delete this appointment?",
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: Color.fromARGB(
+                                                            255, 23, 59, 47)),
+                                                  ),
+                                                  actions: [
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child: const Text(
+                                                          "No",
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      23,
+                                                                      59,
+                                                                      47)),
+                                                        )),
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          deleteAppointment(
+                                                              appointmentData,
+                                                              index);
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child: const Text(
+                                                          "Yes",
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      23,
+                                                                      59,
+                                                                      47)),
+                                                        )),
+                                                  ],
+                                                );
+                                              });
+                                        },
+                                        icon: const Icon(
+                                          Icons.delete,
+                                          color: GlobalVariables
+                                              .unselectednavbarcolor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 );
-                              },
-                              child: IndividualBooking(
-                                image: appointments![index]
-                                    .servicemans[0]
-                                    .images[0],
-                              ),
-                            );
-                          }),
-                        )),
+                              }),
+                            )),
+                      ),
+                    ],
                   )
                 ],
               );

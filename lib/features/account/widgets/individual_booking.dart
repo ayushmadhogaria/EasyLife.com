@@ -9,6 +9,7 @@ class IndividualBooking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 140,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -21,7 +22,8 @@ class IndividualBooking extends StatelessWidget {
         ),
         child: Container(
           width: 180,
-          padding: const EdgeInsets.all(10),
+          height: 150,
+          padding: const EdgeInsets.all(5),
           child: Image.network(
             image,
             fit: BoxFit.fitHeight,

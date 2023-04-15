@@ -30,7 +30,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case TermsAndConditionPage.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) => TermsAndConditionPage(),
+        builder: (_) => const TermsAndConditionPage(),
       );
     case MapScreen.routeName:
       return MaterialPageRoute(
