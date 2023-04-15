@@ -3,6 +3,7 @@ import 'package:easylifeapp/constants/global_variables.dart';
 import 'package:easylifeapp/providers/user_provider.dart';
 import 'package:easylifeapp/screens/about_us_screen.dart';
 import 'package:easylifeapp/screens/login_screen.dart';
+import 'package:easylifeapp/screens/terms_condition_screen.dart';
 import 'package:easylifeapp/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -214,7 +215,8 @@ class _ServicemanAccountState extends State<ServicemanAccount> {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.pushNamed(context, LoginScreen.routeName);
+                    Navigator.pushNamed(
+                        context, TermsAndConditionPage.routeName);
                   },
                   leading: const Icon(
                     Icons.details_outlined,
