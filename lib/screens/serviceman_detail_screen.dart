@@ -596,7 +596,6 @@ class _ServicemanDetailScreenState extends State<ServicemanDetailScreen> {
                   height: 0,
                 );
               }
-              
             }),
             Padding(
               padding: const EdgeInsets.only(top: 12.0),

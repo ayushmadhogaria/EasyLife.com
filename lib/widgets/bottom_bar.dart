@@ -29,12 +29,6 @@ class _BottomBarState extends State<BottomBar> {
     const SettingsScreen(),
   ];
 
-  // void updatePage(int page) {
-  //   setState(() {
-  //     _page = page;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     final page = Provider.of<NavigationProvider>(context).selectedIndex;

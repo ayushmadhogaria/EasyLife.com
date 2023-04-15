@@ -1,4 +1,6 @@
+import 'package:easylifeapp/screens/about_us_screen.dart';
 import 'package:easylifeapp/screens/login_screen.dart';
+import 'package:easylifeapp/screens/terms_condition_screen.dart';
 import 'package:easylifeapp/services/auth_service.dart';
 import 'package:easylifeapp/widgets/custom_textfield.dart';
 import 'package:easylifeapp/widgets/number_textfield.dart';
@@ -226,6 +228,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           }),
                     ),
                     GestureDetector(
+                      onTap: () => {
+                        {
+                          {
+                            Navigator.pushNamed(
+                                context, TermsAndConditionPage.routeName),
+                          }
+                        }
+                      },
                       child: RichText(
                         text: const TextSpan(children: [
                           TextSpan(
@@ -243,15 +253,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   fontSize: 15)),
                         ]),
                       ),
-                      onTap: () => {
-                        //for terms and conditions page
-
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => const BottomBar(),
-                        //     )),
-                      },
                     ),
                   ],
                 ),

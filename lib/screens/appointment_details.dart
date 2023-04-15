@@ -704,15 +704,6 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                             ? StepState.complete
                             : StepState.indexed,
                       ),
-                      // Step(
-                      //   title: const Text('Accepted'),
-                      //   content: const Text(
-                      //       'Your appointment is yet to be accepted.'),
-                      //   isActive: currentStep >= 1,
-                      //   state: currentStep > 1
-                      //       ? StepState.complete
-                      //       : StepState.indexed,
-                      // ),
                       Step(
                         title: const Text('Declined'),
                         content: const Text(
@@ -739,7 +730,6 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                         state: currentStep > 2
                             ? StepState.complete
                             : StepState.indexed,
-                        // state: completedStep
                       ),
                     ],
                   ),

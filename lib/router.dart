@@ -11,6 +11,7 @@ import 'package:easylifeapp/screens/map_screen.dart';
 import 'package:easylifeapp/screens/registration_screen.dart';
 import 'package:easylifeapp/screens/search_screen.dart';
 import 'package:easylifeapp/screens/serviceman_detail_screen.dart';
+import 'package:easylifeapp/screens/terms_condition_screen.dart';
 import 'package:easylifeapp/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +26,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => AboutUsScreen(),
+      );
+    case TermsAndConditionPage.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => TermsAndConditionPage(),
       );
     case MapScreen.routeName:
       return MaterialPageRoute(
